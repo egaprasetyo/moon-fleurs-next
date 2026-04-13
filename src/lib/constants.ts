@@ -35,6 +35,7 @@ export const SEO_KEYWORDS = [
 // Navigation links
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
+  { label: "Kategori", href: "/categories" },
   { label: "Products", href: "/products" },
   { label: "Store", href: "/store" },
 ] as const;

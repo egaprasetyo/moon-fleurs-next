@@ -10,12 +10,12 @@ import { RelatedProducts } from "@/components/product/related-products";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Separator } from "@/components/ui/separator";
 import { useProduct } from "@/hooks/use-products";
 import { useStoreInfo } from "@/hooks/use-store-info";
 import { useActivePromos } from "@/hooks/use-promos";
 import { useWishlistStore } from "@/stores/wishlist-store";
 import { formatPrice } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -27,15 +27,18 @@ export default function ProductDetailPage() {
 
   if (isLoading) {
     return (
-      <section className="py-8 md:py-12">
+      <section className="py-12 md:py-20">
         <Container>
-          <div className="grid gap-8 lg:grid-cols-2">
-            <Skeleton className="aspect-square w-full rounded-2xl" />
-            <div className="space-y-4">
-              <Skeleton className="h-8 w-3/4" />
-              <Skeleton className="h-6 w-1/4" />
-              <Skeleton className="h-24 w-full" />
-              <Skeleton className="h-12 w-full" />
+          <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr]">
+            <Skeleton className="aspect-square w-full rounded-[2.5rem]" />
+            <div className="space-y-6 pt-4">
+              <Skeleton className="h-10 w-3/4" />
+              <Skeleton className="h-8 w-1/4" />
+              <Skeleton className="h-32 w-full" />
+              <div className="flex gap-4">
+                <Skeleton className="h-14 w-full rounded-full" />
+                <Skeleton className="h-14 w-14 rounded-full" />
+              </div>
             </div>
           </div>
         </Container>
@@ -45,12 +48,16 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <section className="py-20">
+      <section className="py-32">
         <Container>
-          <div className="text-center">
-            <span className="text-5xl">🌸</span>
-            <h1 className="mt-4 font-heading text-2xl font-bold">Produk tidak ditemukan</h1>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center justify-center text-center"
+          >
+            <span className="text-6xl drop-shadow-md">🌸</span>
+            <h1 className="mt-6 font-heading text-3xl font-bold">Produk Tidak Ditemukan</h1>
+            <p className="mt-2 text-muted-foreground">Maaf, koleksi yang Anda cari sudah tidak tersedia.</p>
+          </motion.div>
         </Container>
       </section>
     );
@@ -64,102 +71,126 @@ export default function ProductDetailPage() {
   const activePromo = promos?.[0];
   const wishlisted = isInWishlist(product.id);
 
-
-
   return (
-    <section className="py-8 md:py-12">
+    <section className="relative overflow-hidden py-6 md:py-20">
+      {/* Background Decor */}
+      <div className="pointer-events-none absolute -left-[10%] top-0 -z-10 h-[500px] w-[500px] rounded-full bg-rose-light/20 blur-[120px] dark:bg-rose-dark/10" />
+
       <Container>
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
           {/* Gallery */}
-          <ProductGallery
-            thumbnail={product.thumbnail_url}
-            images={product.images || []}
-            productName={product.name}
-          />
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <ProductGallery
+              thumbnail={product.thumbnail_url}
+              images={product.images || []}
+              productName={product.name}
+            />
+          </motion.div>
 
-          {/* Info */}
-          <div className="space-y-6">
-            {/* Badges */}
-            <div className="flex flex-wrap gap-2">
-              {product.category && (
-                <Badge variant="secondary">{product.category.name}</Badge>
-              )}
-              {hasDiscount && (
-                <Badge className="bg-destructive text-destructive-foreground">
-                  -{discountPercent}%
-                </Badge>
-              )}
-              {activePromo && (
-                <Badge className="bg-gold text-foreground">
-                  Promo: {activePromo.code}
-                </Badge>
-              )}
-            </div>
+          {/* Product Info */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col justify-center space-y-8"
+          >
+            <div className="space-y-4">
+              {/* Badges */}
+              <div className="flex flex-wrap gap-2">
+                {product.category && (
+                  <Badge variant="secondary" className="rounded-full px-3 py-1 font-semibold">
+                    {product.category.name}
+                  </Badge>
+                )}
+                {hasDiscount && (
+                  <Badge className="bg-gradient-to-r from-destructive to-rose-400 rounded-full px-3 py-1 text-white shadow-sm font-semibold border-0">
+                    Diskon {discountPercent}%
+                  </Badge>
+                )}
+                {activePromo && (
+                  <Badge className="bg-gradient-to-r from-amber-400 to-amber-500 rounded-full px-3 py-1 text-white shadow-sm font-semibold border-0">
+                    Promo: {activePromo.code}
+                  </Badge>
+                )}
+              </div>
 
-            {/* Title */}
-            <h1 className="font-heading text-2xl font-bold md:text-3xl lg:text-4xl">
-              {product.name}
-            </h1>
+              {/* Title & Price */}
+              <div className="space-y-2">
+                <h1 className="font-heading text-4xl font-extrabold tracking-tight md:text-5xl">
+                  {product.name}
+                </h1>
 
-            {/* Price */}
-            <div className="flex items-baseline gap-3">
-              <span className="text-2xl font-bold text-primary md:text-3xl">
-                {formatPrice(hasDiscount ? product.discount_price! : product.price)}
-              </span>
-              {hasDiscount && (
-                <span className="text-lg text-muted-foreground line-through">
-                  {formatPrice(product.price)}
-                </span>
-              )}
+                <div className="mt-4 flex items-baseline gap-3">
+                  <span className="text-3xl font-black text-primary md:text-4xl">
+                    {formatPrice(hasDiscount ? product.discount_price! : product.price)}
+                  </span>
+                  {hasDiscount && (
+                    <span className="text-xl font-medium text-muted-foreground line-through decoration-muted-foreground/40">
+                      {formatPrice(product.price)}
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
 
             {/* Description */}
             {product.description && (
-              <div className="prose prose-sm max-w-none text-muted-foreground">
+              <div className="prose prose-sm md:prose-base max-w-none text-muted-foreground leading-relaxed">
                 <p>{product.description}</p>
               </div>
             )}
 
-            <Separator />
+            <div className="h-px w-full bg-gradient-to-r from-border/80 via-border/40 to-transparent" />
 
             {/* Actions */}
-            <div className="space-y-3">
+            <div className="space-y-4 pt-2">
               {store?.whatsapp_number && (
-                <WhatsAppOrderBtn
-                  productName={product.name}
-                  price={hasDiscount ? product.discount_price! : product.price}
-                  whatsappNumber={store.whatsapp_number}
-                  promoCode={activePromo?.code}
-                />
+                <div className="group w-full">
+                  <WhatsAppOrderBtn
+                    productName={product.name}
+                    price={hasDiscount ? product.discount_price! : product.price}
+                    whatsappNumber={store.whatsapp_number}
+                    promoCode={activePromo?.code}
+                  />
+                </div>
               )}
 
               <div className="flex gap-3">
                 <Button
                   variant="outline"
-                  className="flex-1 gap-2 rounded-full"
+                  size="lg"
+                  className={`flex-1 gap-2 rounded-full border-2 transition-all hover:bg-muted active:scale-95 ${wishlisted ? "border-rose-400/50 bg-rose-50" : ""}`}
                   onClick={() => toggleItem(product.id)}
                 >
                   <Heart
-                    className={`h-4 w-4 ${wishlisted ? "fill-red-500 text-red-500" : ""}`}
+                    className={`h-5 w-5 transition-transform ${wishlisted ? "fill-red-500 text-red-500 scale-110" : ""}`}
                   />
-                  {wishlisted ? "Di Wishlist" : "Tambah ke Wishlist"}
+                  <span className="font-semibold">{wishlisted ? "Tersimpan di Wishlist" : "Simpan ke Wishlist"}</span>
                 </Button>
-                <ShareButton
-                  productName={product.name}
-                  productSlug={product.slug}
-                  price={product.price}
-                />
+                <div className="shrink-0">
+                  <ShareButton
+                    productName={product.name}
+                    productSlug={product.slug}
+                    price={product.price}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Related Products */}
-        <RelatedProducts
-          productId={product.id}
-          categoryId={product.category_id}
-          manualIds={product.related_product_ids}
-        />
+        <div className="mt-24 md:mt-32">
+          {/* Related Products */}
+          <RelatedProducts
+            productId={product.id}
+            categoryId={product.category_id}
+            manualIds={product.related_product_ids}
+          />
+        </div>
       </Container>
     </section>
   );
