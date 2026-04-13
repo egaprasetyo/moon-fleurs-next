@@ -120,7 +120,7 @@ export default function ProductDetailPage() {
 
               {/* Title & Price */}
               <div className="space-y-2">
-                <h1 className="font-heading text-4xl font-extrabold tracking-tight md:text-5xl">
+                <h1 className="font-sans text-4xl font-extrabold tracking-tight md:text-5xl">
                   {product.name}
                 </h1>
 
