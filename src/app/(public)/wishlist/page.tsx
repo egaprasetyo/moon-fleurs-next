@@ -1,17 +1,17 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { Trash2, ShoppingBag, Heart } from "lucide-react";
+import { ShoppingBag, Heart } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useWishlistStore } from "@/stores/wishlist-store";
-import { formatPrice } from "@/lib/utils";
-import { PLACEHOLDER_PRODUCT } from "@/lib/constants";
+import { useProductsByIds } from "@/hooks/use-products";
+import { ProductCard } from "@/components/product/product-card";
 
 export default function WishlistPage() {
-  const { items, removeItem, clearAll } = useWishlistStore();
+  const { items, clearAll } = useWishlistStore();
+  const { data: products, isLoading } = useProductsByIds(items);
 
   return (
     <>
@@ -56,52 +56,22 @@ export default function WishlistPage() {
                 </Button>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {items.map((item) => {
-                  const hasDiscount = item.discount_price && item.discount_price < item.price;
-                  return (
-                    <Card key={item.id} className="flex overflow-hidden">
-                      <Link
-                        href={`/products/${item.slug}`}
-                        className="relative h-32 w-32 shrink-0"
-                      >
-                        <Image
-                          src={item.thumbnail_url || PLACEHOLDER_PRODUCT}
-                          alt={item.name}
-                          fill
-                          className="object-cover"
-                          sizes="128px"
-                        />
-                      </Link>
-                      <div className="flex flex-1 flex-col justify-between p-4">
-                        <div>
-                          <Link href={`/products/${item.slug}`}>
-                            <h3 className="font-medium text-sm line-clamp-2 hover:text-primary transition-colors">
-                              {item.name}
-                            </h3>
-                          </Link>
-                          <div className="mt-1 flex items-center gap-2">
-                            <span className="font-semibold text-primary text-sm">
-                              {formatPrice(hasDiscount ? item.discount_price! : item.price)}
-                            </span>
-                            {hasDiscount && (
-                              <span className="text-xs text-muted-foreground line-through">
-                                {formatPrice(item.price)}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <button
-                          onClick={() => removeItem(item.id)}
-                          className="mt-2 flex w-fit items-center gap-1 text-xs text-destructive hover:underline"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                          Hapus
-                        </button>
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 md:gap-6">
+                {isLoading ? (
+                  Array.from({ length: Math.min(items.length, 8) || 4 }).map((_, i) => (
+                    <div key={i} className="flex flex-col gap-3">
+                      <Skeleton className="aspect-square w-full rounded-xl" />
+                      <div className="space-y-2 px-1">
+                        <Skeleton className="h-4 w-3/4" />
+                        <Skeleton className="h-4 w-1/2" />
                       </div>
-                    </Card>
-                  );
-                })}
+                    </div>
+                  ))
+                ) : (
+                  products?.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))
+                )}
               </div>
             </>
           )}

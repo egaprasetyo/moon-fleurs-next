@@ -1,21 +1,12 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export interface WishlistItem {
-  id: string;
-  name: string;
-  slug: string;
-  price: number;
-  discount_price?: number | null;
-  thumbnail_url?: string | null;
-}
-
 interface WishlistState {
-  items: WishlistItem[];
-  addItem: (item: WishlistItem) => void;
+  items: string[];
+  addItem: (id: string) => void;
   removeItem: (id: string) => void;
   isInWishlist: (id: string) => boolean;
-  toggleItem: (item: WishlistItem) => void;
+  toggleItem: (id: string) => void;
   clearAll: () => void;
 }
 
@@ -24,25 +15,25 @@ export const useWishlistStore = create<WishlistState>()(
     (set, get) => ({
       items: [],
 
-      addItem: (item) =>
+      addItem: (id) =>
         set((state) => {
-          if (state.items.some((i) => i.id === item.id)) return state;
-          return { items: [...state.items, item] };
+          if (state.items.includes(id)) return state;
+          return { items: [...state.items, id] };
         }),
 
       removeItem: (id) =>
         set((state) => ({
-          items: state.items.filter((i) => i.id !== id),
+          items: state.items.filter((i) => i !== id),
         })),
 
-      isInWishlist: (id) => get().items.some((i) => i.id === id),
+      isInWishlist: (id) => get().items.includes(id),
 
-      toggleItem: (item) => {
+      toggleItem: (id) => {
         const { items } = get();
-        if (items.some((i) => i.id === item.id)) {
-          set({ items: items.filter((i) => i.id !== item.id) });
+        if (items.includes(id)) {
+          set({ items: items.filter((i) => i !== id) });
         } else {
-          set({ items: [...items, item] });
+          set({ items: [...items, id] });
         }
       },
 
@@ -50,6 +41,22 @@ export const useWishlistStore = create<WishlistState>()(
     }),
     {
       name: "moon-fleurs-wishlist",
+      version: 1,
+      migrate: (persistedState: unknown, version: number) => {
+        if (
+          version === 0 &&
+          persistedState &&
+          typeof persistedState === "object" &&
+          "items" in persistedState &&
+          Array.isArray((persistedState as Record<string, unknown>).items)
+        ) {
+          const state = persistedState as { items: unknown[] };
+          state.items = state.items
+            .map((i) => (typeof i === "string" ? i : (i as { id?: string })?.id))
+            .filter(Boolean);
+        }
+        return persistedState as WishlistState;
+      }
     }
   )
 );

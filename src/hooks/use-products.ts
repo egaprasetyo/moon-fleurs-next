@@ -143,11 +143,29 @@ export function usePriceRange() {
         .order("price", { ascending: true });
 
       if (error) throw error;
-      const prices = (data || []).map((p) => p.price);
+      const prices = (data || []).map((p: { price: number }) => p.price);
       return {
         min: Math.min(...prices, 0),
         max: Math.max(...prices, 1000000),
       };
     },
+  });
+}
+
+export function useProductsByIds(ids: string[]) {
+  return useQuery({
+    queryKey: ["products", "by-ids", ids],
+    queryFn: async () => {
+      if (!ids || ids.length === 0) return [];
+      const { data, error } = await supabase
+        .from("products")
+        .select("*, category:categories(name, slug)")
+        .in("id", ids)
+        .eq("is_active", true);
+
+      if (error) throw error;
+      return data as Product[];
+    },
+    enabled: ids.length > 0,
   });
 }

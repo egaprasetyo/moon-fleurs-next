@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Plus, Trash2, Eye, EyeOff } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -113,6 +113,11 @@ export default function AdminBannersPage() {
                     <div className="flex justify-end gap-1">
                       <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => toggleActive(banner.id, banner.is_active)}>
                         {banner.is_active ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
+                      </Button>
+                      <Button asChild variant="ghost" size="icon" className="h-8 w-8">
+                        <Link href={`/admin/banners/${banner.id}`}>
+                          <Pencil className="h-3.5 w-3.5" />
+                        </Link>
                       </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>

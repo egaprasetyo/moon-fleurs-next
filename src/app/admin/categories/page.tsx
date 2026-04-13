@@ -115,6 +115,11 @@ export default function AdminCategoriesPage() {
                       <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => toggleActive(cat.id, cat.is_active)}>
                         {cat.is_active ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
                       </Button>
+                      <Button asChild variant="ghost" size="icon" className="h-8 w-8">
+                        <Link href={`/admin/categories/${cat.id}`}>
+                          <Pencil className="h-3.5 w-3.5" />
+                        </Link>
+                      </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive"><Trash2 className="h-3.5 w-3.5" /></Button>

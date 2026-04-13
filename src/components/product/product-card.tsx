@@ -6,7 +6,7 @@ import { Heart } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatPrice } from "@/lib/utils";
-import { useWishlistStore, type WishlistItem } from "@/stores/wishlist-store";
+import { useWishlistStore } from "@/stores/wishlist-store";
 import { PLACEHOLDER_PRODUCT } from "@/lib/constants";
 import type { Product } from "@/types";
 
@@ -25,20 +25,13 @@ export function ProductCard({ product }: ProductCardProps) {
     ? Math.round((1 - product.discount_price! / product.price) * 100)
     : 0;
 
-  const wishlistItem: WishlistItem = {
-    id: product.id,
-    name: product.name,
-    slug: product.slug,
-    price: product.price,
-    discount_price: product.discount_price,
-    thumbnail_url: product.thumbnail_url,
-  };
+
 
   return (
     <Card className="group overflow-hidden border-border/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
       {/* Image */}
       <div className="relative aspect-square overflow-hidden">
-        <Link href={`/products/${product.slug}`}>
+        <Link href={`/products/${product.slug}`} className="relative block h-full w-full">
           <Image
             src={product.thumbnail_url || PLACEHOLDER_PRODUCT}
             alt={product.name}
@@ -50,22 +43,21 @@ export function ProductCard({ product }: ProductCardProps) {
 
         {/* Wishlist button */}
         <button
-          onClick={() => toggleItem(wishlistItem)}
+          onClick={(e) => { e.preventDefault(); toggleItem(product.id); }}
           className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm transition-all hover:bg-white hover:scale-110"
           aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
         >
           <Heart
-            className={`h-4 w-4 transition-colors ${
-              wishlisted
-                ? "fill-red-500 text-red-500"
-                : "text-muted-foreground"
-            }`}
+            className={`h-4 w-4 transition-colors ${wishlisted
+              ? "fill-red-500 text-red-500"
+              : "text-muted-foreground"
+              }`}
           />
         </button>
 
         {/* Discount badge */}
         {hasDiscount && (
-          <Badge className="absolute left-2 top-2 bg-destructive text-destructive-foreground">
+          <Badge className="absolute left-2 top-2 bg-destructive text-white">
             -{discountPercent}%
           </Badge>
         )}

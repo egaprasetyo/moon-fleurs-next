@@ -117,6 +117,11 @@ export default function AdminPromosPage() {
                         onClick={() => toggleActive(promo.id, promo.is_active)}>
                         {promo.is_active ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
                       </Button>
+                      <Button asChild variant="ghost" size="icon" className="h-8 w-8">
+                        <Link href={`/admin/promos/${promo.id}`}>
+                          <Pencil className="h-3.5 w-3.5" />
+                        </Link>
+                      </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">

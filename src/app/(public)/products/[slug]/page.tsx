@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { useProduct } from "@/hooks/use-products";
 import { useStoreInfo } from "@/hooks/use-store-info";
 import { useActivePromos } from "@/hooks/use-promos";
-import { useWishlistStore, type WishlistItem } from "@/stores/wishlist-store";
+import { useWishlistStore } from "@/stores/wishlist-store";
 import { formatPrice } from "@/lib/utils";
 
 export default function ProductDetailPage() {
@@ -64,14 +64,7 @@ export default function ProductDetailPage() {
   const activePromo = promos?.[0];
   const wishlisted = isInWishlist(product.id);
 
-  const wishlistItem: WishlistItem = {
-    id: product.id,
-    name: product.name,
-    slug: product.slug,
-    price: product.price,
-    discount_price: product.discount_price,
-    thumbnail_url: product.thumbnail_url,
-  };
+
 
   return (
     <section className="py-8 md:py-12">
@@ -144,7 +137,7 @@ export default function ProductDetailPage() {
                 <Button
                   variant="outline"
                   className="flex-1 gap-2 rounded-full"
-                  onClick={() => toggleItem(wishlistItem)}
+                  onClick={() => toggleItem(product.id)}
                 >
                   <Heart
                     className={`h-4 w-4 ${wishlisted ? "fill-red-500 text-red-500" : ""}`}

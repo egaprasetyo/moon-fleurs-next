@@ -117,6 +117,11 @@ export default function AdminReviewsPage() {
                         onClick={() => toggleApproved(review.id, review.is_approved)}>
                         {review.is_approved ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
                       </Button>
+                      <Button asChild variant="ghost" size="icon" className="h-8 w-8">
+                        <Link href={`/admin/reviews/${review.id}`}>
+                          <Pencil className="h-3.5 w-3.5" />
+                        </Link>
+                      </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
