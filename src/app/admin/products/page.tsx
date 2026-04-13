@@ -57,29 +57,27 @@ export default function AdminProductsPage() {
   }, []);
 
   const deleteProduct = async (id: string) => {
-    // Optimistic: remove from local state immediately
     setProducts((prev) => prev.filter((p) => p.id !== id));
-    const { error } = await supabase.from("products").delete().eq("id", id);
-    if (error) {
-      toast.error("Gagal menghapus produk");
-      fetchProducts(); // revert on error
+    const { error, data } = await supabase.from("products").delete().eq("id", id).select();
+    if (error || !data?.length) {
+      toast.error(error?.message || "Gagal menghapus — cek RLS policy");
+      fetchProducts();
     } else {
       toast.success("Produk berhasil dihapus");
     }
   };
 
   const toggleActive = async (id: string, current: boolean) => {
-    // Optimistic: toggle in local state immediately
     setProducts((prev) =>
       prev.map((p) => (p.id === id ? { ...p, is_active: !current } : p))
     );
-    const { error } = await supabase
+    const { error, data } = await supabase
       .from("products")
       .update({ is_active: !current })
-      .eq("id", id);
-    if (error) {
-      toast.error("Gagal mengubah status");
-      // Revert
+      .eq("id", id)
+      .select();
+    if (error || !data?.length) {
+      toast.error(error?.message || "Update gagal — cek RLS policy di Supabase");
       setProducts((prev) =>
         prev.map((p) => (p.id === id ? { ...p, is_active: current } : p))
       );

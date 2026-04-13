@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ImageUpload } from "@/components/admin/image-upload";
 import { toast } from "sonner";
 import type { Category } from "@/types";
 
@@ -143,8 +144,12 @@ export function ProductForm({ productId }: ProductFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label>URL Gambar Thumbnail</Label>
-            <Input value={form.thumbnail_url} onChange={(e) => setForm({ ...form, thumbnail_url: e.target.value })} placeholder="https://..." />
+            <Label>Gambar Thumbnail</Label>
+            <ImageUpload
+              value={form.thumbnail_url}
+              onChange={(url) => setForm({ ...form, thumbnail_url: url })}
+              bucket="products"
+            />
           </div>
 
           <div className="flex gap-8">

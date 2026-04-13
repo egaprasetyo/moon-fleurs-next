@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
+import { ImageUpload } from "@/components/admin/image-upload";
 import { toast } from "sonner";
 
 interface BannerFormProps {
@@ -83,8 +84,12 @@ export function BannerForm({ bannerId }: BannerFormProps) {
             <Input value={form.subtitle} onChange={(e) => setForm({ ...form, subtitle: e.target.value })} />
           </div>
           <div className="space-y-2">
-            <Label>URL Gambar *</Label>
-            <Input value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} placeholder="https://..." required />
+            <Label>Gambar Banner *</Label>
+            <ImageUpload
+              value={form.image_url}
+              onChange={(url) => setForm({ ...form, image_url: url })}
+              bucket="banners"
+            />
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">

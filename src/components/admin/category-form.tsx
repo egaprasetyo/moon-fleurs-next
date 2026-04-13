@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
+import { ImageUpload } from "@/components/admin/image-upload";
 import { toast } from "sonner";
 
 interface CategoryFormProps {
@@ -99,8 +100,12 @@ export function CategoryForm({ categoryId }: CategoryFormProps) {
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <Label>URL Gambar</Label>
-              <Input value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} placeholder="https://..." />
+              <Label>Gambar</Label>
+              <ImageUpload
+                value={form.image_url}
+                onChange={(url) => setForm({ ...form, image_url: url })}
+                bucket="products"
+              />
             </div>
             <div className="space-y-2">
               <Label>Urutan Tampil</Label>
