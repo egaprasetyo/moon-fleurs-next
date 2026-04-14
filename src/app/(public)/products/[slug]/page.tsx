@@ -27,7 +27,7 @@ export default function ProductDetailPage() {
 
   if (isLoading) {
     return (
-      <section className="py-12 md:py-20">
+      <section className="min-h-screen py-12 md:py-20">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr]">
             <Skeleton className="aspect-square w-full rounded-[2.5rem]" />
@@ -48,7 +48,7 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <section className="py-32">
+      <section className="min-h-screen py-32">
         <Container>
           <motion.div
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -72,7 +72,7 @@ export default function ProductDetailPage() {
   const wishlisted = isInWishlist(product.id);
 
   return (
-    <section className="relative overflow-hidden py-6 md:py-20">
+    <section className="relative min-h-screen overflow-hidden py-6 md:py-20">
       {/* Background Decor */}
       <div className="pointer-events-none absolute -left-[10%] top-0 -z-10 h-[500px] w-[500px] rounded-full bg-rose-light/20 blur-[120px] dark:bg-rose-dark/10" />
 
