@@ -41,6 +41,9 @@ export const metadata: Metadata = {
     title: `${APP_NAME} — Toko Bunga Modern`,
     description: APP_DESCRIPTION,
   },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION, // Ambil dari .env.local
+  },
   robots: {
     index: true,
     follow: true,
