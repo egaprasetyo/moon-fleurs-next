@@ -105,6 +105,24 @@ export interface Profile {
   created_at: string;
 }
 
+export interface PopupBanner {
+  id: string;
+  title: string;
+  description: string | null;
+  image_url: string;
+  link_url: string | null;
+  button_text: string;
+  show_delay: number;
+  show_frequency: "once_session" | "once_day" | "always";
+  target_pages: string[];
+  is_active: boolean;
+  valid_from: string;
+  valid_until: string | null;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
 // Query params
 export interface ProductFilters {
   categorySlug?: string;
