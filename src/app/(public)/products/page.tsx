@@ -26,10 +26,10 @@ export default function ProductsPage() {
   });
 
   return (
-    <div className="relative min-h-screen bg-background">
+    <div className="relative min-h-screen overflow-x-clip bg-background">
       {/* Immersive background decoration */}
-      <div className="pointer-events-none absolute -left-[10%] top-0 -z-10 h-[500px] w-[500px] rounded-full bg-rose-light/20 blur-[120px]" />
-      <div className="pointer-events-none absolute right-0 top-[20%] -z-10 h-[600px] w-[600px] rounded-full bg-sage-light/10 blur-[150px]" />
+      <div className="pointer-events-none absolute -left-[10%] top-0 -z-10 h-[50vw] w-[50vw] max-h-[500px] max-w-[500px] rounded-full bg-rose-light/20 blur-[120px]" />
+      <div className="pointer-events-none absolute right-0 top-[20%] -z-10 h-[60vw] w-[60vw] max-h-[600px] max-w-[600px] rounded-full bg-sage-light/10 blur-[150px]" />
 
       {/* Exquisite Header */}
       <section className="pt-8 pb-12 md:py-16">
