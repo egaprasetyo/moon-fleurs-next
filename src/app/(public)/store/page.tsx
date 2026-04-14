@@ -45,7 +45,7 @@ export default function StorePage() {
     );
   }
 
-  const operatingHours = store.operating_hours || {};
+  const operatingHours = store.operating_hours || [];
 
   return (
     <>
@@ -106,20 +106,22 @@ export default function StorePage() {
                   <Separator />
 
                   {/* Operating hours */}
-                  {Object.keys(operatingHours).length > 0 && (
+                  {operatingHours.length > 0 && (
                     <div>
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold">
                         <Clock className="h-5 w-5 text-primary" />
                         Jam Operasional
                       </div>
                       <div className="space-y-2 pl-7">
-                        {Object.entries(operatingHours).map(([day, hours]) => (
+                        {operatingHours.map((item) => (
                           <div
-                            key={day}
+                            key={item.day}
                             className="flex justify-between text-sm text-muted-foreground"
                           >
-                            <span>{day}</span>
-                            <span className="font-medium">{hours}</span>
+                            <span>{item.day}</span>
+                            <span className="font-medium">
+                              {item.isClosed ? "Tutup" : `${item.open} – ${item.close}`}
+                            </span>
                           </div>
                         ))}
                       </div>

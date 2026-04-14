@@ -33,7 +33,7 @@ export function StorePreview() {
 
   if (!store) return null;
 
-  const operatingHours = store.operating_hours || {};
+  const operatingHours = store.operating_hours || [];
 
   return (
     <section className="relative overflow-hidden bg-background py-20 md:py-32">
@@ -120,7 +120,7 @@ export function StorePreview() {
             <hr className="border-border/50" />
 
             {/* Operating hours */}
-            {Object.keys(operatingHours).length > 0 && (
+            {operatingHours.length > 0 && (
               <div className="space-y-5">
                 <div className="flex items-center gap-3 text-lg font-semibold text-foreground">
                   <div className="flex items-center justify-center rounded-full bg-primary/10 p-2 text-primary">
@@ -129,17 +129,19 @@ export function StorePreview() {
                   Jam Operasional
                 </div>
                 <div className="space-y-3 pl-3">
-                  {Object.entries(operatingHours).map(([day, hours], i) => (
+                  {operatingHours.map((item, i) => (
                     <motion.div
-                      key={day}
+                      key={item.day}
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.3 + i * 0.1 }}
                       className="flex items-center justify-between border-b border-border/30 pb-3 text-base text-muted-foreground last:border-0 last:pb-0 font-medium"
                     >
-                      <span className="text-foreground">{day}</span>
-                      <span className="rounded-full bg-muted/50 px-3 py-1 text-sm">{hours as string}</span>
+                      <span className="text-foreground">{item.day}</span>
+                      <span className="rounded-full bg-muted/50 px-3 py-1 text-sm">
+                        {item.isClosed ? "Tutup" : `${item.open} – ${item.close}`}
+                      </span>
                     </motion.div>
                   ))}
                 </div>

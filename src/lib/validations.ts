@@ -77,7 +77,12 @@ export const storeInfoSchema = z.object({
   google_maps_url: z.string().url().optional().nullable().or(z.literal("")),
   latitude: z.coerce.number().optional().nullable(),
   longitude: z.coerce.number().optional().nullable(),
-  operating_hours: z.record(z.string(), z.string()).default({}),
+  operating_hours: z.array(z.object({
+    day: z.string(),
+    open: z.string().nullable(),
+    close: z.string().nullable(),
+    isClosed: z.boolean().optional(),
+  })).default([]),
   images: z.array(z.string()).default([]),
 });
 

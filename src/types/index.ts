@@ -64,6 +64,13 @@ export interface Banner {
   updated_at: string;
 }
 
+export interface OperatingHour {
+  day: string;
+  open: string | null;
+  close: string | null;
+  isClosed?: boolean;
+}
+
 export interface StoreInfo {
   id: string;
   name: string;
@@ -73,7 +80,7 @@ export interface StoreInfo {
   google_maps_url: string | null;
   latitude: number | null;
   longitude: number | null;
-  operating_hours: Record<string, string>;
+  operating_hours: OperatingHour[];
   images: string[];
   updated_at: string;
 }
