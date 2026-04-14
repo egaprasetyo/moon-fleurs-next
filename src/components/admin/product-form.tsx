@@ -37,31 +37,37 @@ export function ProductForm({ productId }: ProductFormProps) {
     is_active: true,
   });
 
-  // Load categories
+  // Load categories + product detail (edit) in parallel, set state together
   useEffect(() => {
     const load = async () => {
-      const { data } = await supabase.from("categories").select("*").eq("is_active", true).order("display_order");
-      setCategories((data || []) as Category[]);
-    };
-    load();
-  }, []);
+      const categoriesPromise = supabase
+        .from("categories")
+        .select("*")
+        .eq("is_active", true)
+        .order("display_order");
 
-  // Load product for edit
-  useEffect(() => {
-    if (!productId) return;
-    const load = async () => {
-      const { data } = await supabase.from("products").select("*").eq("id", productId).single();
-      if (data) {
+      const productPromise = productId
+        ? supabase.from("products").select("*").eq("id", productId).single()
+        : null;
+
+      const [catResult, prodResult] = await Promise.all([
+        categoriesPromise,
+        productPromise,
+      ]);
+
+      setCategories((catResult.data || []) as Category[]);
+
+      if (prodResult?.data) {
         setForm({
-          name: data.name,
-          slug: data.slug,
-          description: data.description || "",
-          price: data.price,
-          discount_price: data.discount_price,
-          category_id: data.category_id,
-          thumbnail_url: data.thumbnail_url || "",
-          is_featured: data.is_featured,
-          is_active: data.is_active,
+          name: prodResult.data.name,
+          slug: prodResult.data.slug,
+          description: prodResult.data.description || "",
+          price: prodResult.data.price,
+          discount_price: prodResult.data.discount_price,
+          category_id: prodResult.data.category_id,
+          thumbnail_url: prodResult.data.thumbnail_url || "",
+          is_featured: prodResult.data.is_featured,
+          is_active: prodResult.data.is_active,
         });
       }
     };
