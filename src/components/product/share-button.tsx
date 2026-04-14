@@ -7,8 +7,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { SITE_URL } from "@/lib/constants";
+
+const subscribe = () => () => {};
+const getCanNativeShare = () => typeof navigator !== "undefined" && typeof navigator.share === "function";
+const getServerSnapshot = () => false;
 
 interface ShareButtonProps {
   productName: string;
@@ -18,6 +22,7 @@ interface ShareButtonProps {
 
 export function ShareButton({ productName, productSlug, price }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
+  const canNativeShare = useSyncExternalStore(subscribe, getCanNativeShare, getServerSnapshot);
   const url = `${SITE_URL}/products/${productSlug}`;
 
   const trackShare = (method: string) => {
@@ -80,7 +85,7 @@ export function ShareButton({ productName, productSlug, price }: ShareButtonProp
   };
 
   // If native share is available (mobile), use it directly
-  if (typeof navigator !== "undefined" && navigator.share) {
+  if (canNativeShare) {
     return (
       <Button
         variant="outline"
