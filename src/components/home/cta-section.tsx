@@ -34,12 +34,12 @@ export function CtaSection() {
             </motion.div>
 
             <h2 className="max-w-2xl font-heading text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl">
-              Siap Memesan Rangkaian Bunga?
+              Siap Memesan Artificial Flowers?
             </h2>
             
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl">
               Hubungi kami via WhatsApp untuk konsultasi eksklusif dan pemesanan.
-              Tim kami siap merangkai cerita manis Anda ke dalam setiap kelopak bunga.
+              Tim kami siap merangkai cerita manis Anda ke dalam setiap bunga buatan yang abadi.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">

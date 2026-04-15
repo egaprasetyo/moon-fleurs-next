@@ -35,7 +35,7 @@ export default function CategoriesPage() {
               Jelajahi <span className="bg-gradient-to-r from-primary to-rose-400 bg-clip-text text-transparent">Kategori</span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground/90 md:text-xl">
-              Temukan rangkaian bunga yang sempurna sesuai dengan tema dan momen perayaan Anda. Tiap kategori dirangkai dengan dedikasi penuh.
+              Temukan artificial flowers yang sempurna sesuai dengan tema dan momen perayaan Anda. Tiap kategori dirangkai dengan dedikasi penuh untuk keindahan yang tetap terjaga.
             </p>
           </MotionSection>
 

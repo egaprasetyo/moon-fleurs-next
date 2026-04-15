@@ -59,7 +59,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
         {/* Bottom CTA */}
         <div className="absolute bottom-0 left-0 right-0 border-t border-border p-6">
           <p className="text-sm text-muted-foreground text-center">
-            Pesan bunga segar untuk momen spesialmu 🌸
+            Pesan bunga artificial abadi untuk momen spesialmu 🌸
           </p>
         </div>
       </SheetContent>

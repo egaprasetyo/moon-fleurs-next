@@ -49,7 +49,7 @@ export default function ProductsPage() {
                 Jelajahi <span className="bg-gradient-to-r from-primary to-rose-400 bg-clip-text text-transparent">Semua Produk</span>
               </h1>
               <p className="mx-auto mt-4 max-w-xl text-muted-foreground/90 md:text-lg">
-                Temukan variasi rangkaian bunga segar nan elegan, dirangkai dengan sepenuh hati untuk momen sempurna Anda.
+                Temukan variasi artificial flowers premium nan elegan, dirangkai dengan sepenuh hati untuk momen sempurna Anda yang abadi.
               </p>
             </MotionSection>
           </div>

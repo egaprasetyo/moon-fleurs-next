@@ -20,7 +20,7 @@ export function WhatsAppFab() {
   // TODO: Get WhatsApp number from store_info via API/context
   const whatsappNumber = "6281234567890";
   const message = encodeURIComponent(
-    "Halo Moon Fleurs! 🌸\nSaya ingin bertanya tentang produk bunga."
+    "Halo Moon Fleurs! 🌸\nSaya ingin bertanya tentang produk artificial flowers."
   );
 
   return (

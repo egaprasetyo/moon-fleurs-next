@@ -192,6 +192,28 @@ export default function ProductDetailPage() {
           />
         </div>
       </Container>
+
+      {/* Product Schema JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product.name,
+            image: product.thumbnail_url,
+            description: product.description || `Miliki ${product.name} bunga artificial premium dari Moon Fleurs.`,
+            sku: product.slug,
+            offers: {
+              "@type": "Offer",
+              url: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/products/${product.slug}`,
+              priceCurrency: "IDR",
+              price: hasDiscount ? product.discount_price : product.price,
+              availability: "https://schema.org/InStock",
+            },
+          }),
+        }}
+      />
     </section>
   );
 }

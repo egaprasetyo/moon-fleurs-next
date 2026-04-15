@@ -2,9 +2,24 @@ import Link from "next/link";
 import { MapPin, Phone, Clock } from "lucide-react";
 import { Container } from "./container";
 import { APP_NAME } from "@/lib/constants";
+import { createClient } from "@/lib/supabase/server";
+import type { OperatingHour } from "@/types";
 
-export function Footer() {
+export async function Footer() {
   const currentYear = new Date().getFullYear();
+  const supabase = await createClient();
+  const { data: store } = await supabase.from("store_info").select("address, phone, whatsapp_number, operating_hours").single();
+
+  const address = store?.address || "Jl. Bunga Mawar No. 123, Jakarta Selatan";
+  const phone = store?.phone || store?.whatsapp_number || "(021) 1234-5678";
+  
+  let hoursText = "Sen-Sab 08:00-20:00";
+  if (store?.operating_hours && Array.isArray(store.operating_hours)) {
+    const openDays = store.operating_hours.filter((h: OperatingHour) => !h.isClosed && h.open && h.close);
+    if (openDays.length > 0) {
+      hoursText = `${openDays.length === 7 ? "Setiap Hari" : "Buka:"} ${openDays[0].open} - ${openDays[0].close}`;
+    }
+  }
 
   return (
     <footer className="bg-foreground text-background/80 mt-auto">
@@ -57,19 +72,19 @@ export function Footer() {
               <li className="flex items-start gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                 <span className="text-sm text-background/60">
-                  Jl. Bunga Mawar No. 123, Jakarta Selatan
+                  {address}
                 </span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 shrink-0 text-primary" />
                 <span className="text-sm text-background/60">
-                  (021) 1234-5678
+                  {phone}
                 </span>
               </li>
               <li className="flex items-center gap-2">
                 <Clock className="h-4 w-4 shrink-0 text-primary" />
                 <span className="text-sm text-background/60">
-                  Sen-Sab 08:00-20:00
+                  {hoursText}
                 </span>
               </li>
             </ul>

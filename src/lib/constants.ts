@@ -4,7 +4,7 @@
 
 export const APP_NAME = "Moon Fleurs";
 export const APP_DESCRIPTION =
-  "Moon Fleurs menyediakan rangkaian bunga segar dan elegan untuk berbagai momen spesial. Pesan via WhatsApp.";
+  "Moon Fleurs menyediakan rangkaian bunga artificial premium dan elegan untuk berbagai momen spesial. Tahan lama, realistis, dan indah abadi. Pesan via WhatsApp.";
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
@@ -20,16 +20,16 @@ export const PLACEHOLDER_BANNER = "/images/placeholder-banner.webp";
 
 // SEO
 export const SEO_KEYWORDS = [
-  "toko bunga",
-  "florist",
-  "rangkaian bunga",
-  "bunga segar",
-  "buket bunga",
+  "toko bunga artificial",
+  "artificial flowers",
+  "faux flowers",
+  "bunga imitasi premium",
+  "rangkaian bunga abadi",
   "Moon Fleurs",
-  "Jakarta",
-  "bunga papan",
-  "bunga standing",
-  "bunga pernikahan",
+  "hadiah bunga tahan lama",
+  "buket bunga artificial",
+  "florist artificial jakarta",
+  "dekorasi bunga",
 ];
 
 // Navigation links
