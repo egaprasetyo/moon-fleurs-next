@@ -1,7 +1,5 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
-import { Container } from "@/components/layout/container";
 import { ProductCard } from "@/components/product/product-card";
 import { useRelatedProducts } from "@/hooks/use-products";
 

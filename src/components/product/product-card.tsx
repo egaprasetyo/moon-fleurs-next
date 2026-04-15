@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { formatPrice } from "@/lib/utils";
 import { useWishlistStore } from "@/stores/wishlist-store";
 import { PLACEHOLDER_PRODUCT } from "@/lib/constants";

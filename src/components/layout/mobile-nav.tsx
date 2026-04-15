@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Heart, X } from "lucide-react";
+import { Heart } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { NAV_LINKS } from "@/lib/constants";
 import { useWishlistStore } from "@/stores/wishlist-store";

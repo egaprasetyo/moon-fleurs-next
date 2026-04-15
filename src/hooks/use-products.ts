@@ -1,58 +1,118 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { createClient } from "@/lib/supabase/client";
 import type { Product, ProductFilters } from "@/types";
 
 const supabase = createClient();
+const DEFAULT_PAGE_SIZE = 12;
+
+async function resolveCategoryId(categorySlug?: string) {
+  if (!categorySlug) return null;
+
+  const { data, error } = await supabase
+    .from("categories")
+    .select("id")
+    .eq("slug", categorySlug)
+    .eq("is_active", true)
+    .maybeSingle();
+
+  if (error) throw error;
+  return data?.id ?? null;
+}
+
+async function buildProductsQuery(filters?: ProductFilters) {
+  let query = supabase
+    .from("products")
+    .select("*, category:categories(*)")
+    .eq("is_active", true);
+
+  if (filters?.categorySlug) {
+    const categoryId = await resolveCategoryId(filters.categorySlug);
+
+    // Category slug is not found: return empty result.
+    if (!categoryId) {
+      return { query, shouldReturnEmpty: true };
+    }
+
+    query = query.eq("category_id", categoryId);
+  }
+
+  if (filters?.search) {
+    query = query.ilike("name", `%${filters.search}%`);
+  }
+
+  if (filters?.minPrice !== undefined) {
+    query = query.gte("price", filters.minPrice);
+  }
+
+  if (filters?.maxPrice !== undefined) {
+    query = query.lte("price", filters.maxPrice);
+  }
+
+  if (filters?.featured) {
+    query = query.eq("is_featured", true);
+  }
+
+  switch (filters?.sortBy) {
+    case "price_asc":
+      query = query.order("price", { ascending: true });
+      break;
+    case "price_desc":
+      query = query.order("price", { ascending: false });
+      break;
+    case "name":
+      query = query.order("name", { ascending: true });
+      break;
+    default:
+      query = query.order("created_at", { ascending: false });
+  }
+
+  return { query, shouldReturnEmpty: false };
+}
 
 export function useProducts(filters?: ProductFilters) {
   return useQuery({
     queryKey: ["products", filters],
     queryFn: async () => {
-      let query = supabase
-        .from("products")
-        .select("*, category:categories(*)")
-        .eq("is_active", true);
+      const { query, shouldReturnEmpty } = await buildProductsQuery(filters);
 
-      if (filters?.categorySlug) {
-        query = query.eq("category.slug", filters.categorySlug);
-      }
-
-      if (filters?.search) {
-        query = query.ilike("name", `%${filters.search}%`);
-      }
-
-      if (filters?.minPrice !== undefined) {
-        query = query.gte("price", filters.minPrice);
-      }
-
-      if (filters?.maxPrice !== undefined) {
-        query = query.lte("price", filters.maxPrice);
-      }
-
-      if (filters?.featured) {
-        query = query.eq("is_featured", true);
-      }
-
-      // Sort
-      switch (filters?.sortBy) {
-        case "price_asc":
-          query = query.order("price", { ascending: true });
-          break;
-        case "price_desc":
-          query = query.order("price", { ascending: false });
-          break;
-        case "name":
-          query = query.order("name", { ascending: true });
-          break;
-        default:
-          query = query.order("created_at", { ascending: false });
+      if (shouldReturnEmpty) {
+        return [];
       }
 
       const { data, error } = await query;
       if (error) throw error;
       return data as Product[];
+    },
+  });
+}
+
+export function useInfiniteProducts(
+  filters?: ProductFilters,
+  pageSize = DEFAULT_PAGE_SIZE
+) {
+  return useInfiniteQuery({
+    queryKey: ["products", "infinite", filters, pageSize],
+    initialPageParam: 0,
+    queryFn: async ({ pageParam }) => {
+      const { query, shouldReturnEmpty } = await buildProductsQuery(filters);
+
+      if (shouldReturnEmpty) {
+        return [] as Product[];
+      }
+
+      const from = pageParam * pageSize;
+      const to = from + pageSize - 1;
+
+      const { data, error } = await query.range(from, to);
+      if (error) throw error;
+
+      return (data ?? []) as Product[];
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.length < pageSize) return undefined;
+      return allPages.length;
     },
   });
 }

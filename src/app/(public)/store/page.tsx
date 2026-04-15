@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { MapPin, Clock, Phone, MessageCircle } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
@@ -46,6 +47,7 @@ export default function StorePage() {
   }
 
   const operatingHours = store.operating_hours || [];
+  const storeImages = store.images || [];
 
   return (
     <>
@@ -152,6 +154,33 @@ export default function StorePage() {
           </div>
         </Container>
       </section>
+
+      {storeImages.length > 0 && (
+        <section className="pb-12 md:pb-16">
+          <Container>
+            <h2 className="font-heading text-2xl font-bold md:text-3xl">Galeri Toko</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Beberapa foto suasana toko Moon Fleurs
+            </p>
+            <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3">
+              {storeImages.map((imageUrl, index) => (
+                <div
+                  key={`${imageUrl}-${index}`}
+                  className="relative aspect-square overflow-hidden rounded-2xl border border-border"
+                >
+                  <Image
+                    src={imageUrl}
+                    alt={`Galeri toko ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                  />
+                </div>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
     </>
   );
 }

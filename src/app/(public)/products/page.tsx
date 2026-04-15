@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useMemo, useRef } from "react";
 import { Container } from "@/components/layout/container";
 import { ProductCard } from "@/components/product/product-card";
 import { SearchAutocomplete } from "@/components/product/search-autocomplete";
@@ -8,7 +9,7 @@ import { PriceRangeFilter } from "@/components/product/price-range-filter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SlidersHorizontal, Settings2 } from "lucide-react";
-import { useProducts } from "@/hooks/use-products";
+import { useInfiniteProducts } from "@/hooks/use-products";
 import { useAppStore } from "@/stores/app-store";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -16,14 +17,54 @@ import { MotionSection, MotionStagger, MotionItem } from "@/components/shared/mo
 import { motion } from "framer-motion";
 
 export default function ProductsPage() {
-  const { selectedCategory, priceRange, sortBy, setSortBy } = useAppStore();
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const {
+    selectedCategory,
+    priceRange,
+    sortBy,
+    setSortBy,
+    resetFilters,
+  } = useAppStore();
 
-  const { data: products, isLoading } = useProducts({
+  const {
+    data,
+    isPending,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useInfiniteProducts({
     categorySlug: selectedCategory || undefined,
     minPrice: priceRange[0],
     maxPrice: priceRange[1],
     sortBy,
   });
+
+  const products = useMemo(
+    () => data?.pages.flatMap((page) => page) ?? [],
+    [data]
+  );
+
+  useEffect(() => {
+    const node = sentinelRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry.isIntersecting) return;
+        if (!hasNextPage || isFetchingNextPage) return;
+        fetchNextPage();
+      },
+      {
+        root: null,
+        rootMargin: "300px",
+        threshold: 0.1,
+      }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
     <div className="relative min-h-screen overflow-x-clip bg-background">
@@ -134,7 +175,7 @@ export default function ProductsPage() {
 
             {/* Product Grid Area */}
             <div className="flex-1 min-w-0">
-              {isLoading ? (
+              {isPending ? (
                 <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 lg:gap-8">
                   {Array.from({ length: 12 }).map((_, i) => (
                     <div key={i} className="flex flex-col gap-3 rounded-[1.5rem] border border-border/20 p-2 sm:rounded-[2rem]">
@@ -147,15 +188,34 @@ export default function ProductsPage() {
                     </div>
                   ))}
                 </div>
-              ) : products && products.length > 0 ? (
-                <MotionStagger className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 lg:gap-8">
-                  {products.map((product) => (
-                    <MotionItem key={product.id}>
-                      <ProductCard product={product} />
-                    </MotionItem>
-                  ))}
-                </MotionStagger>
-              ) : (
+              ) : products.length > 0 ? (
+                <>
+                  <MotionStagger className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 lg:gap-8">
+                    {products.map((product) => (
+                      <MotionItem key={product.id}>
+                        <ProductCard product={product} />
+                      </MotionItem>
+                    ))}
+                  </MotionStagger>
+
+                  <div ref={sentinelRef} className="h-4 w-full" />
+
+                  {isFetchingNextPage && (
+                    <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 lg:gap-8">
+                      {Array.from({ length: 6 }).map((_, i) => (
+                        <div key={i} className="flex flex-col gap-3 rounded-[1.5rem] border border-border/20 p-2 sm:rounded-[2rem]">
+                          <Skeleton className="aspect-square w-full rounded-[1.2rem] sm:rounded-[1.5rem]" />
+                          <div className="space-y-2 px-2 pb-2">
+                            <Skeleton className="h-3 w-1/3" />
+                            <Skeleton className="h-4 w-3/4" />
+                            <Skeleton className="h-5 w-1/2" />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
+                ) : (
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -171,7 +231,7 @@ export default function ProductsPage() {
                   <Button 
                     variant="outline" 
                     className="mt-6 rounded-full border-primary/20 bg-primary/5 hover:bg-primary/10 hover:text-primary"
-                    onClick={() => window.location.reload()}
+                    onClick={resetFilters}
                   >
                     Reset Filter
                   </Button>

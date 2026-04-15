@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ImageUpload } from "@/components/admin/image-upload";
 import { Clock } from "lucide-react";
 import { toast } from "sonner";
 import type { StoreInfo, OperatingHour } from "@/types";
@@ -32,11 +33,20 @@ export default function AdminStorePage() {
   useEffect(() => {
     const fetch = async () => {
       const { data } = await supabase.from("store_info").select("*").single();
-      setStore(data as StoreInfo | null);
+      if (data) {
+        setStore({
+          ...(data as StoreInfo),
+          images: Array.isArray((data as StoreInfo).images)
+            ? (data as StoreInfo).images
+            : [],
+        });
+      } else {
+        setStore(null);
+      }
       setLoading(false);
     };
     fetch();
-  }, []);
+  }, [supabase]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,6 +64,7 @@ export default function AdminStorePage() {
         latitude: store.latitude,
         longitude: store.longitude,
         operating_hours: store.operating_hours,
+        images: store.images || [],
       })
       .eq("id", store.id);
 
@@ -165,6 +176,66 @@ export default function AdminStorePage() {
               </div>
             </div>
           </form>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Galeri Toko</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {(store.images || []).length === 0 && (
+            <p className="text-sm text-muted-foreground">
+              Belum ada gambar galeri. Tambahkan foto toko agar tampil di halaman publik.
+            </p>
+          )}
+
+          {(store.images || []).map((imageUrl, index) => (
+            <div key={`store-image-${index}`} className="rounded-xl border p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium">Gambar #{index + 1}</p>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="text-destructive"
+                  onClick={() =>
+                    setStore({
+                      ...store,
+                      images: (store.images || []).filter((_, idx) => idx !== index),
+                    })
+                  }
+                >
+                  Hapus
+                </Button>
+              </div>
+              <ImageUpload
+                value={imageUrl}
+                onChange={(url) =>
+                  setStore({
+                    ...store,
+                    images: (store.images || []).map((item, idx) =>
+                      idx === index ? url : item
+                    ),
+                  })
+                }
+                bucket="stores"
+              />
+            </div>
+          ))}
+
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() =>
+              setStore({
+                ...store,
+                images: [...(store.images || []), ""],
+              })
+            }
+          >
+            Tambah Gambar
+          </Button>
         </CardContent>
       </Card>
 

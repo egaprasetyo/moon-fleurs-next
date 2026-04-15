@@ -2,7 +2,6 @@
 
 import { useCategories } from "@/hooks/use-categories";
 import { useAppStore } from "@/stores/app-store";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 export function CategoryFilter() {
