@@ -1,6 +1,14 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+function redirectToLogin(request: NextRequest, reason: string) {
+  const url = request.nextUrl.clone();
+  url.pathname = "/auth/login";
+  url.searchParams.set("reason", reason);
+  url.searchParams.set("next", request.nextUrl.pathname);
+  return NextResponse.redirect(url);
+}
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -35,9 +43,7 @@ export async function updateSession(request: NextRequest) {
 
   if (request.nextUrl.pathname.startsWith("/admin")) {
     if (!user) {
-      const url = request.nextUrl.clone();
-      url.pathname = "/auth/login";
-      return NextResponse.redirect(url);
+      return redirectToLogin(request, "unauthenticated");
     }
 
     const { data: profile, error: profileError } = await supabase
@@ -46,10 +52,12 @@ export async function updateSession(request: NextRequest) {
       .eq("id", user.id)
       .maybeSingle();
 
-    if (profileError || profile?.role !== "admin") {
-      const url = request.nextUrl.clone();
-      url.pathname = "/auth/login";
-      return NextResponse.redirect(url);
+    if (profileError) {
+      return redirectToLogin(request, "profile_error");
+    }
+
+    if (!profile || profile.role !== "admin") {
+      return redirectToLogin(request, "not_admin");
     }
   }
 
