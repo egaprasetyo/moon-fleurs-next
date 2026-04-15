@@ -76,7 +76,7 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        {/* Global Schema */}
+        {/* Global Schema - Business */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -92,6 +92,19 @@ export default async function RootLayout({
                 "@type": "PostalAddress",
                 ...fallbackAddress,
               },
+            }),
+          }}
+        />
+        {/* WebSite Schema - helps Google display correct site name */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: APP_NAME,
+              alternateName: "Moon Fleurs — Premium Artificial Flowers",
+              url: SITE_URL,
             }),
           }}
         />
