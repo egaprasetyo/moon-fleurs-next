@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     description: APP_DESCRIPTION,
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION, // Ambil dari .env.local
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
   robots: {
     index: true,
