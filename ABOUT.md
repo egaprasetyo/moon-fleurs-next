@@ -1,70 +1,101 @@
-# 🌸 Moon Fleurs – Artificial Flowers
+# 🌸 Moon Fleurs – Bunga Elegan untuk Setiap Momen Spesial
 
-Moon Fleurs adalah brand yang menyediakan bunga artificial (faux flowers) premium dengan tampilan realistis dan elegan. Produk kami dirancang untuk memberikan keindahan bunga tanpa perawatan yang rumit.
+## 💐 Kirim Perasaan Tanpa Kata
+Hadiahkan momen yang tak terlupakan dengan rangkaian bunga dari Moon Fleurs.  
+Tersedia **bunga segar (fresh flowers)** dan **bunga artificial premium** yang dirancang untuk menyampaikan emosi dengan cara paling indah.
 
----
-
-## ✨ Tentang Produk
-
-Artificial flowers dari Moon Fleurs dibuat dengan detail tinggi sehingga menyerupai bunga asli. Cocok untuk berbagai kebutuhan dekorasi maupun hadiah.
-
-**Keunggulan utama:**
-- Tampilan realistis seperti bunga asli
-- Tidak layu dan tahan lama
-- Tidak memerlukan perawatan
-- Aman untuk penderita alergi dan hewan peliharaan
+👉 **Pesan sekarang & buat hari mereka lebih spesial**
 
 ---
 
-## 🎁 Kenapa Memilih Moon Fleurs?
+## ✨ Kenapa Moon Fleurs?
 
-- **Long-lasting**  
-  Tidak seperti bunga segar, bunga artificial dapat bertahan dalam jangka waktu lama.
+🌹 **Fresh Flowers Berkualitas Premium**  
+Bunga segar pilihan dengan tampilan natural dan wangi yang memikat.
 
-- **Low Maintenance**  
-  Tidak perlu disiram atau dirawat secara khusus.
+🌼 **Artificial Flowers Tahan Lama**  
+Keindahan bunga tanpa khawatir layu — sempurna untuk dekorasi jangka panjang.
 
-- **Premium Aesthetic**  
-  Desain elegan yang cocok untuk berbagai suasana.
+🎨 **Custom Sesuai Keinginan**  
+Bisa request warna, jenis bunga, dan desain sesuai kebutuhanmu.
 
-- **Multifungsi**  
-  Cocok untuk hadiah, dekorasi rumah, kantor, maupun event.
+🚚 **Cocok untuk Semua Momen**  
+Dari hadiah romantis hingga dekorasi event besar.
 
 ---
 
-## 🛍️ Kategori Produk
+## 🌷 Pilih Sesuai Kebutuhanmu
 
-Kami menyediakan berbagai jenis rangkaian bunga:
+### 🌹 Fresh Flowers – Natural & Penuh Makna
+- Tampilan segar & autentik  
+- Aroma alami yang menenangkan  
+- Perfect untuk hadiah spesial  
 
-- 💐 Bouquet
+👉 Cocok untuk: Anniversary, ulang tahun, wisuda, romantic gift  
+
+---
+
+### 🌼 Artificial Flowers – Praktis & Tahan Lama
+- Tidak layu & selalu indah  
+- Tanpa perawatan  
+- Cocok untuk dekorasi rumah & kantor  
+
+👉 Cocok untuk: Interior, hampers, dekorasi jangka panjang  
+
+---
+
+## 🛍️ Produk Favorit Kami
+
+- 💐 Bouquet (Fresh & Artificial)
 - 🏺 Vase Arrangement
 - 🧺 Flower Basket
 - 🌼 Floral Dome
-- 🎨 Custom Arrangement
+- 🎁 Custom Arrangement
+
+✨ Setiap produk dirangkai dengan detail & sentuhan estetika premium.
 
 ---
 
-## 🎯 Cocok Untuk
+## 🎯 Cocok Untuk Semua Momen
 
-- Hadiah ulang tahun
-- Anniversary
-- Dekorasi rumah
-- Dekorasi kantor
-- Wedding & event
-- Hampers eksklusif
-
----
-
-## 💡 Value Proposition
-
-Moon Fleurs menghadirkan solusi bunga yang:
-- Praktis
-- Elegan
-- Tahan lama
-- Tetap indah tanpa perawatan
+- 🎂 Ulang tahun  
+- 💍 Anniversary  
+- 🎓 Wisuda  
+- 🏡 Dekorasi rumah  
+- 🏢 Dekorasi kantor  
+- 💒 Wedding & event  
+- 🎁 Hampers eksklusif  
 
 ---
 
-## 📌 Penutup
+## 💖 Lebih dari Sekadar Bunga
 
-Dengan Moon Fleurs, kamu bisa menikmati keindahan bunga setiap hari tanpa khawatir layu. Pilihan sempurna untuk gaya hidup modern yang praktis namun tetap estetik.
+Moon Fleurs bukan hanya tentang bunga.  
+Ini tentang **perasaan, momen, dan kenangan** yang ingin kamu bagikan.
+
+- 🌹 Fresh → menyampaikan emosi secara langsung  
+- 🌼 Artificial → menjaga keindahan lebih lama  
+
+---
+
+## ⭐ Kenapa Pelanggan Memilih Kami?
+
+✔ Desain elegan & premium  
+✔ Kualitas bunga terbaik  
+✔ Bisa custom sesuai request  
+✔ Cocok untuk semua kebutuhan  
+
+---
+
+## 🚀 Pesan Sekarang
+
+Jangan tunggu momen spesial — ciptakan momen itu sekarang.
+
+👉 **Order sekarang & kirim kebahagiaan hari ini**  
+👉 **Custom bouquet sesuai keinginanmu**
+
+---
+
+## 📌 Moon Fleurs
+
+**Elegant Flowers, Timeless Moments.**
