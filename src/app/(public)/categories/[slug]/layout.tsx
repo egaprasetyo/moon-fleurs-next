@@ -39,7 +39,7 @@ export async function generateMetadata({
   const title = `${category.name} | Moon Fleurs`;
   const description =
     category.description ||
-    `Lihat koleksi ${category.name} artificial flowers premium dari Moon Fleurs.`;
+    `Lihat koleksi ${category.name} bunga segar & artificial premium dari Moon Fleurs.`;
 
   return {
     title,

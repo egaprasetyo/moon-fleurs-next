@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { Container } from "@/components/layout/container";
 import { ProductCard } from "@/components/product/product-card";
 import { SearchAutocomplete } from "@/components/product/search-autocomplete";
@@ -15,6 +15,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Button } from "@/components/ui/button";
 import { MotionSection, MotionStagger, MotionItem } from "@/components/shared/motion";
 import { motion } from "framer-motion";
+import { scrollWindowToTop } from "@/lib/scroll";
 
 export default function ProductsPage() {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
@@ -43,6 +44,17 @@ export default function ProductsPage() {
     () => data?.pages.flatMap((page) => page) ?? [],
     [data]
   );
+
+  /* Halaman ini client-only + grid tinggi; pastikan viewport ke atas setelah mount / navigasi ke /products */
+  useLayoutEffect(() => {
+    scrollWindowToTop();
+  }, []);
+
+  useEffect(() => {
+    scrollWindowToTop();
+    const t = window.setTimeout(scrollWindowToTop, 0);
+    return () => clearTimeout(t);
+  }, []);
 
   useEffect(() => {
     const node = sentinelRef.current;
@@ -90,7 +102,7 @@ export default function ProductsPage() {
                 Jelajahi <span className="bg-gradient-to-r from-primary to-rose-400 bg-clip-text text-transparent">Semua Produk</span>
               </h1>
               <p className="mx-auto mt-4 max-w-xl text-muted-foreground/90 md:text-lg">
-                Temukan variasi artificial flowers premium nan elegan, dirangkai dengan sepenuh hati untuk momen sempurna Anda yang abadi.
+                Temukan variasi bunga segar dan artificial premium, dirangkai dengan sepenuh hati untuk momen sempurna Anda — dari hadiah segar yang wangi hingga rangkaian yang tahan lama.
               </p>
             </MotionSection>
           </div>

@@ -23,7 +23,7 @@ export function WhatsAppFab() {
   if (!whatsappNumber) return null;
 
   const message =
-    "Halo Moon Fleurs! 🌸\nSaya ingin bertanya tentang produk artificial flowers.";
+    "Halo Moon Fleurs! 🌸\nSaya ingin bertanya tentang produk bunga segar dan artificial.";
 
   return (
     <a

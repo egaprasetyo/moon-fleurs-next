@@ -1,35 +1,41 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, Leaf, Infinity, Gift } from "lucide-react";
+import { Sparkles, Flower2, Infinity, Gift } from "lucide-react";
 import { MotionSection, MotionStagger, MotionItem } from "@/components/shared/motion";
 import { Container } from "@/components/layout/container";
 
 const features = [
   {
-    title: "100% Tahan Lama",
-    description: "Nikmati bunga yang selalu mekar tanpa khawatir layu. Berbeda dengan bunga segar, artificial flowers kami dapat bertahan seumur hidup sebagai kenang-kenangan manis.",
+    title: "Bunga Segar Berkualitas",
+    description:
+      "Bunga segar pilihan dengan tampilan natural dan aroma yang memikat — sempurna untuk hadiah, ucapan, dan perayaan yang ingin terasa hidup.",
+    icon: Flower2,
+    color:
+      "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400",
+  },
+  {
+    title: "Artificial Premium & Abadi",
+    description:
+      "Bunga tiruan berkualitas tinggi yang realistis dan tahan lama — indah tanpa khawatir layu, ideal untuk dekorasi dan kenangan yang bertahan.",
     icon: Infinity,
-    color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400"
+    color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
   },
   {
-    title: "Bebas Perawatan",
-    description: "Tidak perlu disiram, tidak terpengaruh cuaca, dan tidak butuh cahaya matahari. Sangat cocok untuk gaya hidup modern yang sibuk dan praktis.",
-    icon: Leaf,
-    color: "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400"
-  },
-  {
-    title: "Realistis & Premium",
-    description: "Dibuat dengan detail presisi tinggi dan material silk/silikon kualitas premium, sehingga menyerupai tekstur serta tampilan aslinya.",
+    title: "Detail & Material Terbaik",
+    description:
+      "Setiap rangkaian dibuat dengan teliti: mulai dari seleksi bunga segar hingga material silk/silikon premium untuk artificial yang halus dan elegan.",
     icon: Sparkles,
-    color: "bg-primary/20 text-primary dark:bg-primary/20 dark:text-primary-foreground"
+    color:
+      "bg-primary/20 text-primary dark:bg-primary/20 dark:text-primary-foreground",
   },
   {
     title: "Sempurna untuk Segala Acara",
-    description: "Dari hadiah romantis, buket pernikahan, hingga dekorasi sudut ruangan di rumah atau kator. Estetik di manapun ia ditempatkan.",
+    description:
+      "Dari buket romantis dan wisuda hingga dekorasi rumah, kantor, atau event — kami sesuaikan dengan momen dan gaya Anda.",
     icon: Gift,
-    color: "bg-rose-100 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400"
-  }
+    color: "bg-rose-100 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400",
+  },
 ];
 
 export function FeaturesSection() {
@@ -52,13 +58,13 @@ export function FeaturesSection() {
             Kenapa Memilih Kami?
           </motion.div>
           <h2 className="mx-auto max-w-2xl font-heading text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
-            Pilihan Cerdas untuk{" "}
+            Segar, Abadi, dan{" "}
             <span className="bg-gradient-to-r from-primary to-rose-400 bg-clip-text text-transparent">
-              Estetika Abadi
+              Penuh Makna
             </span>
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
-            Kami memahami bahwa beberapa memori pantas disimpan selamanya. Bunga tiruan kami adalah pengingat abadi dari momen terbaik Anda.
+            Pilih bunga segar untuk sentuhan natural dan aroma yang memikat, atau artificial premium untuk keindahan yang praktis dan tahan lama — semuanya dirangkai untuk momen Anda.
           </p>
         </MotionSection>
 

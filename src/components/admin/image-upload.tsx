@@ -1,11 +1,16 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useId } from "react";
 import Image from "next/image";
 import { Upload, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/lib/supabase/client";
+import {
+  compressImageFile,
+  extensionForMime,
+  MAX_INPUT_BYTES,
+} from "@/lib/compress-image";
 import { toast } from "sonner";
 
 interface ImageUploadProps {
@@ -24,6 +29,7 @@ export function ImageUpload({
   const [uploading, setUploading] = useState(false);
   const [mode, setMode] = useState<"upload" | "url">(value ? "url" : "upload");
   const inputRef = useRef<HTMLInputElement>(null);
+  const inputId = useId();
   const supabase = createClient();
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,40 +41,65 @@ export function ImageUpload({
       toast.error("File harus berupa gambar");
       return;
     }
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error("Ukuran maksimal 5MB");
+    if (file.size > MAX_INPUT_BYTES) {
+      toast.error("Ukuran file terlalu besar", {
+        description: `Maksimal ${Math.round(MAX_INPUT_BYTES / (1024 * 1024))}MB sebelum kompresi.`,
+      });
       return;
     }
 
     setUploading(true);
 
-    // Generate unique filename
-    const ext = file.name.split(".").pop();
-    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    try {
+      const before = file.size;
+      const processed = await compressImageFile(file);
+      const ext = extensionForMime(processed.type);
+      const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
 
-    const { error } = await supabase.storage
-      .from(bucket)
-      .upload(fileName, file, {
-        cacheControl: "3600",
-        upsert: false,
+      const { error } = await supabase.storage
+        .from(bucket)
+        .upload(fileName, processed, {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: processed.type || "image/jpeg",
+        });
+
+      if (error) {
+        toast.error("Gagal upload", { description: error.message });
+        return;
+      }
+
+      const { data: urlData } = supabase.storage
+        .from(bucket)
+        .getPublicUrl(fileName);
+
+      onChange(urlData.publicUrl);
+      setMode("url");
+
+      const after = processed.size;
+      if (after < before) {
+        const pct = Math.round((1 - after / before) * 100);
+        toast.success("Gambar berhasil diupload", {
+          description: `Ukuran diperkecil ~${pct}% untuk hemat storage (${formatKb(before)} → ${formatKb(after)}).`,
+        });
+      } else {
+        toast.success("Gambar berhasil diupload");
+      }
+    } catch (err) {
+      toast.error("Gagal memproses gambar", {
+        description: err instanceof Error ? err.message : "Coba file lain atau periksa format.",
       });
-
-    if (error) {
-      toast.error("Gagal upload", { description: error.message });
+    } finally {
       setUploading(false);
-      return;
+      if (inputRef.current) inputRef.current.value = "";
     }
-
-    // Get public URL
-    const { data: urlData } = supabase.storage
-      .from(bucket)
-      .getPublicUrl(fileName);
-
-    onChange(urlData.publicUrl);
-    setMode("url");
-    setUploading(false);
-    toast.success("Gambar berhasil diupload");
   };
+
+  function formatKb(bytes: number) {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+  }
 
   const handleRemove = () => {
     onChange("");
@@ -131,11 +162,11 @@ export function ImageUpload({
         <div className="flex items-center gap-2">
           <input
             ref={inputRef}
+            id={inputId}
             type="file"
             accept="image/*"
             onChange={handleFileUpload}
             className="hidden"
-            id="image-upload"
           />
           <Button
             type="button"
@@ -153,7 +184,7 @@ export function ImageUpload({
             {uploading ? "Mengupload..." : "Pilih Gambar"}
           </Button>
           <span className="text-xs text-muted-foreground">
-            Max 5MB (JPG, PNG, WebP)
+            Maks {Math.round(MAX_INPUT_BYTES / (1024 * 1024))}MB sebelum kompresi · diperkecil otomatis (tetap tajam untuk web, lebar maks 1920px)
           </span>
         </div>
       ) : (

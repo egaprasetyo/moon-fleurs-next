@@ -8,9 +8,9 @@ import { StorePreview } from "@/components/home/store-preview";
 import { CtaSection } from "@/components/home/cta-section";
 
 export const metadata: Metadata = {
-  title: "Moon Fleurs - Artificial Flowers Premium",
+  title: "Moon Fleurs — Bunga Segar & Artificial Premium",
   description:
-    "Moon Fleurs menghadirkan bunga artificial premium yang realistis, elegan, dan tahan lama untuk momen spesial Anda.",
+    "Moon Fleurs menghadirkan bunga segar berkualitas dan bunga artificial premium — elegan, dirangkai dengan hati untuk momen spesial Anda.",
 };
 
 export default function HomePage() {

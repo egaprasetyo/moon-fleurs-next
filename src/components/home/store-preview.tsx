@@ -57,7 +57,7 @@ export function StorePreview() {
             transition={{ delay: 0.1 }}
             className="mt-4 font-heading text-4xl font-extrabold tracking-tight md:text-5xl"
           >
-            Kunjungi Showroom Artificial Flowers Kami
+            Kunjungi Showroom Moon Fleurs
           </motion.h2>
         </div>
 

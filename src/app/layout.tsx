@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/sonner";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { createClient } from "@/lib/supabase/server";
 import { GoogleAnalytics } from "@/components/providers/google-analytics";
 import { APP_NAME, APP_DESCRIPTION, SEO_KEYWORDS, SITE_URL } from "@/lib/constants";
@@ -24,7 +25,7 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${APP_NAME} — Premium Artificial Flowers`,
+    default: `${APP_NAME} — Bunga Segar & Artificial Premium`,
     template: `%s | ${APP_NAME}`,
   },
   description: APP_DESCRIPTION,
@@ -34,12 +35,12 @@ export const metadata: Metadata = {
     type: "website",
     locale: "id_ID",
     siteName: APP_NAME,
-    title: `${APP_NAME} — Premium Artificial Flowers`,
+    title: `${APP_NAME} — Bunga Segar & Artificial Premium`,
     description: APP_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${APP_NAME} — Premium Artificial Flowers`,
+    title: `${APP_NAME} — Bunga Segar & Artificial Premium`,
     description: APP_DESCRIPTION,
   },
   verification: {
@@ -103,12 +104,13 @@ export default async function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: APP_NAME,
-              alternateName: "Moon Fleurs — Premium Artificial Flowers",
+              alternateName: "Moon Fleurs — Bunga Segar & Artificial Premium",
               url: SITE_URL,
             }),
           }}
         />
         <QueryProvider>
+          <ScrollToTop />
           {children}
           <Toaster position="top-right" richColors />
         </QueryProvider>

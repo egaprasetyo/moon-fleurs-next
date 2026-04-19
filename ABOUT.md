@@ -1,101 +1,101 @@
-# 🌸 Moon Fleurs – Bunga Elegan untuk Setiap Momen Spesial
+# Moon Fleurs – Bunga Segar & Artificial untuk Setiap Momen Spesial
 
-## 💐 Kirim Perasaan Tanpa Kata
+## Kirim Perasaan Tanpa Kata
 Hadiahkan momen yang tak terlupakan dengan rangkaian bunga dari Moon Fleurs.  
-Tersedia **bunga segar (fresh flowers)** dan **bunga artificial premium** yang dirancang untuk menyampaikan emosi dengan cara paling indah.
+Kami menyediakan **bunga segar (fresh flowers)** berkualitas dan **bunga artificial premium** — keduanya dirangkai untuk menyampaikan emosi dengan cara paling indah.
 
-👉 **Pesan sekarang & buat hari mereka lebih spesial**
+**Pesan sekarang dan buat hari mereka lebih spesial**
 
 ---
 
-## ✨ Kenapa Moon Fleurs?
+## Kenapa Moon Fleurs?
 
-🌹 **Fresh Flowers Berkualitas Premium**  
-Bunga segar pilihan dengan tampilan natural dan wangi yang memikat.
+**Bunga segar berkualitas**  
+Bunga segar pilihan dengan tampilan natural dan aroma yang memikat — cocok untuk hadiah dan perayaan.
 
-🌼 **Artificial Flowers Tahan Lama**  
-Keindahan bunga tanpa khawatir layu — sempurna untuk dekorasi jangka panjang.
+**Artificial flowers tahan lama**  
+Keindahan bunga tanpa khawatir layu — praktis untuk dekorasi dan kenangan yang lebih lama.
 
-🎨 **Custom Sesuai Keinginan**  
-Bisa request warna, jenis bunga, dan desain sesuai kebutuhanmu.
+**Custom sesuai keinginan**  
+Request warna, jenis bunga, dan desain sesuai kebutuhanmu (segar maupun artificial).
 
-🚚 **Cocok untuk Semua Momen**  
+**Cocok untuk semua momen**  
 Dari hadiah romantis hingga dekorasi event besar.
 
 ---
 
-## 🌷 Pilih Sesuai Kebutuhanmu
+## Pilih sesuai kebutuhanmu
 
-### 🌹 Fresh Flowers – Natural & Penuh Makna
-- Tampilan segar & autentik  
+### Fresh flowers – natural dan penuh makna
+- Tampilan segar dan autentik  
 - Aroma alami yang menenangkan  
-- Perfect untuk hadiah spesial  
+- Pas untuk hadiah spesial  
 
-👉 Cocok untuk: Anniversary, ulang tahun, wisuda, romantic gift  
-
----
-
-### 🌼 Artificial Flowers – Praktis & Tahan Lama
-- Tidak layu & selalu indah  
-- Tanpa perawatan  
-- Cocok untuk dekorasi rumah & kantor  
-
-👉 Cocok untuk: Interior, hampers, dekorasi jangka panjang  
+Cocok untuk: anniversary, ulang tahun, wisuda, hadiah romantis  
 
 ---
 
-## 🛍️ Produk Favorit Kami
+### Artificial flowers – praktis dan tahan lama
+- Tidak layu dan tetap indah  
+- Tanpa perawatan seperti bunga segar  
+- Cocok untuk dekorasi rumah, kantor, dan hampers  
 
-- 💐 Bouquet (Fresh & Artificial)
-- 🏺 Vase Arrangement
-- 🧺 Flower Basket
-- 🌼 Floral Dome
-- 🎁 Custom Arrangement
-
-✨ Setiap produk dirangkai dengan detail & sentuhan estetika premium.
+Cocok untuk: interior, dekorasi jangka panjang, gift yang ingin bertahan  
 
 ---
 
-## 🎯 Cocok Untuk Semua Momen
+## Produk favorit kami
 
-- 🎂 Ulang tahun  
-- 💍 Anniversary  
-- 🎓 Wisuda  
-- 🏡 Dekorasi rumah  
-- 🏢 Dekorasi kantor  
-- 💒 Wedding & event  
-- 🎁 Hampers eksklusif  
+- Bouquet (fresh dan artificial)  
+- Vase arrangement  
+- Flower basket  
+- Floral dome  
+- Custom arrangement  
+
+Setiap produk dirangkai dengan detail dan sentuhan estetika premium.
 
 ---
 
-## 💖 Lebih dari Sekadar Bunga
+## Cocok untuk semua momen
+
+- Ulang tahun  
+- Anniversary  
+- Wisuda  
+- Dekorasi rumah  
+- Dekorasi kantor  
+- Wedding dan event  
+- Hampers eksklusif  
+
+---
+
+## Lebih dari sekadar bunga
 
 Moon Fleurs bukan hanya tentang bunga.  
 Ini tentang **perasaan, momen, dan kenangan** yang ingin kamu bagikan.
 
-- 🌹 Fresh → menyampaikan emosi secara langsung  
-- 🌼 Artificial → menjaga keindahan lebih lama  
+- Bunga segar → menyampaikan emosi secara langsung dan natural  
+- Bunga artificial → menjaga keindahan visual lebih lama dengan praktis  
 
 ---
 
-## ⭐ Kenapa Pelanggan Memilih Kami?
+## Kenapa pelanggan memilih kami?
 
-✔ Desain elegan & premium  
-✔ Kualitas bunga terbaik  
-✔ Bisa custom sesuai request  
-✔ Cocok untuk semua kebutuhan  
+- Desain elegan dan premium  
+- Kualitas bunga (segar dan artificial) terjaga  
+- Bisa custom sesuai request  
+- Cocok untuk berbagai kebutuhan  
 
 ---
 
-## 🚀 Pesan Sekarang
+## Pesan sekarang
 
 Jangan tunggu momen spesial — ciptakan momen itu sekarang.
 
-👉 **Order sekarang & kirim kebahagiaan hari ini**  
-👉 **Custom bouquet sesuai keinginanmu**
+**Order sekarang dan kirim kebahagiaan hari ini**  
+**Custom bouquet sesuai keinginanmu**
 
 ---
 
-## 📌 Moon Fleurs
+## Moon Fleurs
 
 **Elegant Flowers, Timeless Moments.**

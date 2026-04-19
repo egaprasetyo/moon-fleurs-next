@@ -40,12 +40,11 @@ export function CtaSection() {
             </motion.div>
 
             <h2 className="max-w-2xl font-heading text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl">
-              Siap Memesan Artificial Flowers?
+              Siap Memesan Bunga Segar atau Artificial?
             </h2>
 
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-              Hubungi kami via WhatsApp untuk konsultasi eksklusif dan pemesanan.
-              Tim kami siap merangkai cerita manis Anda ke dalam setiap bunga buatan yang abadi.
+              Hubungi kami via WhatsApp untuk konsultasi dan pemesanan — baik bunga segar untuk momen yang wangi dan autentik, maupun artificial untuk dekorasi dan hadiah yang tahan lama.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">

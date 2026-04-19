@@ -1,5 +1,8 @@
 -- Optional compatibility patch for related products + multi-image support
 -- Run this only if your database was created before these fields/tables existed.
+--
+-- Setelah ini, jalankan juga: supabase/product_images_rls.sql
+-- agar admin bisa menulis ke product_images (insert/update/delete).
 
 ALTER TABLE public.products
 ADD COLUMN IF NOT EXISTS related_product_ids JSONB NOT NULL DEFAULT '[]'::jsonb;

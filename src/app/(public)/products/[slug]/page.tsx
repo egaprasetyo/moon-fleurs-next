@@ -113,7 +113,7 @@ export async function generateMetadata({
   const title = `${product.name} | Moon Fleurs`;
   const description =
     product.description?.trim() ||
-    `Miliki ${product.name} bunga artificial premium dari Moon Fleurs.`;
+    `Miliki ${product.name} dari Moon Fleurs — bunga segar & artificial premium.`;
   const productUrl = `${SITE_URL}/products/${product.slug}`;
   const imageUrl = toAbsoluteUrl(product.thumbnail_url);
 
@@ -279,7 +279,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             image: schemaImages,
             description:
               product.description ||
-              `Miliki ${product.name} bunga artificial premium dari Moon Fleurs.`,
+              `Miliki ${product.name} dari Moon Fleurs — bunga segar & artificial premium.`,
             sku: product.slug,
             offers: {
               "@type": "Offer",

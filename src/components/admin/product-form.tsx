@@ -29,6 +29,10 @@ type ProductImageRow = {
   display_order: number;
 };
 
+function digitsOnly(s: string) {
+  return s.replace(/\D/g, "");
+}
+
 export function ProductForm({ productId }: ProductFormProps) {
   const router = useRouter();
   const supabase = createClient();
@@ -38,12 +42,13 @@ export function ProductForm({ productId }: ProductFormProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [productOptions, setProductOptions] = useState<ProductOption[]>([]);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
+  /** String saat mengetik — hindari leading zero & angka 0 yang tidak bisa dikosongkan dari input type number */
+  const [priceInput, setPriceInput] = useState("");
+  const [discountInput, setDiscountInput] = useState("");
   const [form, setForm] = useState({
     name: "",
     slug: "",
     description: "",
-    price: 0,
-    discount_price: null as number | null,
     category_id: "",
     thumbnail_url: "",
     is_featured: false,
@@ -102,12 +107,16 @@ export function ProductForm({ productId }: ProductFormProps) {
           description: productResult.error.message,
         });
       } else if (productResult.data) {
+        setPriceInput(String(productResult.data.price ?? ""));
+        setDiscountInput(
+          productResult.data.discount_price != null
+            ? String(productResult.data.discount_price)
+            : ""
+        );
         setForm({
           name: productResult.data.name,
           slug: productResult.data.slug,
           description: productResult.data.description || "",
-          price: productResult.data.price,
-          discount_price: productResult.data.discount_price,
           category_id: productResult.data.category_id,
           thumbnail_url: productResult.data.thumbnail_url || "",
           is_featured: productResult.data.is_featured,
@@ -122,7 +131,11 @@ export function ProductForm({ productId }: ProductFormProps) {
         toast.error("Gagal memuat galeri produk", { description: imageResult.error.message });
       } else {
         const images = (imageResult.data || []) as ProductImageRow[];
-        setGalleryImages(images.map((item) => item.image_url));
+        if (productId) {
+          setGalleryImages(images.map((item) => item.image_url));
+        } else {
+          setGalleryImages(images.length > 0 ? images.map((item) => item.image_url) : [""]);
+        }
       }
     };
 
@@ -173,14 +186,39 @@ export function ProductForm({ productId }: ProductFormProps) {
       return;
     }
 
+    const price = parseInt(priceInput, 10);
+    if (priceInput.trim() === "" || Number.isNaN(price)) {
+      toast.error("Harga wajib diisi dengan angka yang valid");
+      return;
+    }
+    if (price < 0) {
+      toast.error("Harga tidak boleh negatif");
+      return;
+    }
+
+    let discount_price: number | null = null;
+    if (discountInput.trim() !== "") {
+      const d = parseInt(discountInput, 10);
+      if (Number.isNaN(d) || d < 0) {
+        toast.error("Harga diskon tidak valid");
+        return;
+      }
+      discount_price = d;
+      if (discount_price >= price) {
+        toast.error("Harga diskon harus lebih kecil dari harga normal");
+        return;
+      }
+    }
+
     setLoading(true);
 
     try {
       const payload = {
         ...form,
+        price,
         description: form.description || null,
         thumbnail_url: form.thumbnail_url || null,
-        discount_price: form.discount_price || null,
+        discount_price,
         related_product_ids: form.related_product_ids,
       };
 
@@ -283,25 +321,24 @@ export function ProductForm({ productId }: ProductFormProps) {
             <div className="space-y-2">
               <Label>Harga (Rp) *</Label>
               <Input
-                type="number"
-                min={0}
-                value={form.price}
-                onChange={(e) => setForm({ ...form, price: Number(e.target.value) })}
+                type="text"
+                inputMode="numeric"
+                autoComplete="off"
+                placeholder="Contoh: 450000"
+                value={priceInput}
+                onChange={(e) => setPriceInput(digitsOnly(e.target.value))}
                 required
               />
             </div>
             <div className="space-y-2">
               <Label>Harga Diskon (Rp)</Label>
               <Input
-                type="number"
-                min={0}
-                value={form.discount_price ?? ""}
-                onChange={(e) =>
-                  setForm({
-                    ...form,
-                    discount_price: e.target.value ? Number(e.target.value) : null,
-                  })
-                }
+                type="text"
+                inputMode="numeric"
+                autoComplete="off"
+                placeholder="Kosongkan jika tidak ada diskon"
+                value={discountInput}
+                onChange={(e) => setDiscountInput(digitsOnly(e.target.value))}
               />
             </div>
             <div className="space-y-2">
@@ -325,7 +362,10 @@ export function ProductForm({ productId }: ProductFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label>Gambar Thumbnail</Label>
+            <Label>Gambar utama (thumbnail)</Label>
+            <p className="text-xs text-muted-foreground">
+              Dipakai di kartu produk & daftar
+            </p>
             <ImageUpload
               value={form.thumbnail_url}
               onChange={(url) => setForm({ ...form, thumbnail_url: url })}
@@ -334,23 +374,28 @@ export function ProductForm({ productId }: ProductFormProps) {
           </div>
 
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label>Gambar Tambahan Produk</Label>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <Label>Galeri foto (banyak gambar)</Label>
+                <p className="mt-1 text-xs text-muted-foreground max-w-xl">
+                  Anda bisa upload beberapa file atau tempel URL per slot.
+                </p>
+              </div>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
-                className="gap-2"
+                className="gap-2 shrink-0"
                 onClick={addGalleryImageField}
               >
                 <Plus className="h-4 w-4" />
-                Tambah Gambar
+                Tambah slot foto
               </Button>
             </div>
 
             {galleryImages.length === 0 ? (
               <p className="text-sm text-muted-foreground">
-                Belum ada gambar tambahan. Klik &quot;Tambah Gambar&quot; untuk menambahkan.
+                Belum ada slot galeri. Klik &quot;Tambah slot foto&quot; untuk menambah foto ke-2, ke-3, dan seterusnya.
               </p>
             ) : (
               <div className="space-y-4">

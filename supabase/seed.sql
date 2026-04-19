@@ -33,6 +33,11 @@ INSERT INTO products (name, slug, description, price, discount_price, category_i
   ('Birthday Flower Hampers', 'birthday-flower-hampers', 'Paket hampers ulang tahun: buket bunga mini, cokelat premium, dan greeting card.', 600000, 549000, (SELECT id FROM categories WHERE slug = 'hampers-gift'), true, true, '{}'),
   ('Thank You Gift Set', 'thank-you-gift-set', 'Hampers ucapan terima kasih dengan buket bunga, lilin aromaterapi, dan teh premium.', 500000, NULL, (SELECT id FROM categories WHERE slug = 'hampers-gift'), false, true, '{}');
 
+-- 2b. Galeri multi-foto (perlu tabel product_images — jalankan product_media_patch.sql dulu)
+INSERT INTO product_images (product_id, image_url, display_order) VALUES
+  ((SELECT id FROM products WHERE slug = 'rose-elegance-bouquet'), 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=800&h=800&fit=crop', 0),
+  ((SELECT id FROM products WHERE slug = 'rose-elegance-bouquet'), 'https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800&h=800&fit=crop', 1);
+
 -- 3. Reviews (10)
 INSERT INTO reviews (reviewer_name, rating, comment, is_approved, product_id) VALUES
   ('Anisa Putri', 5, 'Buketnya sangat cantik dan segar! Pengiriman cepat, packing rapi. Pasti order lagi!', true, (SELECT id FROM products WHERE slug = 'rose-elegance-bouquet')),
