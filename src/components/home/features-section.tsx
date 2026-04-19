@@ -7,26 +7,26 @@ import { Container } from "@/components/layout/container";
 
 const features = [
   {
-    title: "100% Tahan Lama",
-    description: "Nikmati bunga yang selalu mekar tanpa khawatir layu. Berbeda dengan bunga segar, artificial flowers kami dapat bertahan seumur hidup sebagai kenang-kenangan manis.",
+    title: "Forever in Bloom",
+    description: "Unlike fresh flowers that fade with time, our artificial blooms remain eternally beautiful—a timeless reminder of your most cherished moments. No wilting, no loss of elegance, just memories preserved perfectly.",
     icon: Infinity,
     color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400"
   },
   {
-    title: "Bebas Perawatan",
-    description: "Tidak perlu disiram, tidak terpengaruh cuaca, dan tidak butuh cahaya matahari. Sangat cocok untuk gaya hidup modern yang sibuk dan praktis.",
+    title: "Effortlessly Beautiful",
+    description: "Enjoy fresh-looking flowers without the worry. No watering, no pruning, no seasonal concerns—just enduring beauty that fits your life perfectly. Pure elegance with zero maintenance.",
     icon: Leaf,
     color: "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400"
   },
   {
-    title: "Realistis & Premium",
-    description: "Dibuat dengan detail presisi tinggi dan material silk/silikon kualitas premium, sehingga menyerupai tekstur serta tampilan aslinya.",
+    title: "Artfully Crafted",
+    description: "Each petal is meticulously crafted with premium silk and silicone, capturing the delicate beauty of nature with stunning accuracy. Our artisans ensure every bloom feels as real as it looks.",
     icon: Sparkles,
     color: "bg-primary/20 text-primary dark:bg-primary/20 dark:text-primary-foreground"
   },
   {
-    title: "Sempurna untuk Segala Acara",
-    description: "Dari hadiah romantis, buket pernikahan, hingga dekorasi sudut ruangan di rumah atau kator. Estetik di manapun ia ditempatkan.",
+    title: "Perfect for Every Moment",
+    description: "From romantic surprises and wedding celebrations to thoughtful home décor and event installations, our arrangements elevate every occasion with timeless elegance.",
     icon: Gift,
     color: "bg-rose-100 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400"
   }
@@ -49,16 +49,16 @@ export function FeaturesSection() {
             className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary shadow-sm"
           >
             <Sparkles className="h-4 w-4" />
-            Kenapa Memilih Kami?
+            Why Choose Moon Fleurs?
           </motion.div>
           <h2 className="mx-auto max-w-2xl font-heading text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
-            Pilihan Cerdas untuk{" "}
+            Elegance That{" "}
             <span className="bg-gradient-to-r from-primary to-rose-400 bg-clip-text text-transparent">
-              Estetika Abadi
+              Endures
             </span>
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
-            Kami memahami bahwa beberapa memori pantas disimpan selamanya. Bunga tiruan kami adalah pengingat abadi dari momen terbaik Anda.
+            We believe some moments deserve to be preserved forever. Our artificial flowers are living testaments to love, joy, and beauty that never fades.
           </p>
         </MotionSection>
 

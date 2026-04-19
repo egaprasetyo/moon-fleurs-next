@@ -40,12 +40,11 @@ export function CtaSection() {
             </motion.div>
 
             <h2 className="max-w-2xl font-heading text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl">
-              Siap Memesan Artificial Flowers?
+              Ready to Preserve a Moment?
             </h2>
 
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-              Hubungi kami via WhatsApp untuk konsultasi eksklusif dan pemesanan.
-              Tim kami siap merangkai cerita manis Anda ke dalam setiap bunga buatan yang abadi.
+              Let&apos;s create something beautiful together. Our team is ready to craft a custom arrangement that perfectly captures your vision and emotion.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -62,7 +61,7 @@ export function CtaSection() {
                     className="flex items-center gap-2"
                   >
                     <MessageCircle className="h-5 w-5" />
-                    <span className="font-semibold">Pesan via WhatsApp</span>
+                    <span className="font-semibold">Start Your Order</span>
                     <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
                   </a>
                 </Button>
@@ -75,7 +74,7 @@ export function CtaSection() {
                 className="group h-14 rounded-full border-2 border-primary/20 bg-transparent px-8 text-base font-semibold text-foreground transition-all hover:border-primary/40 hover:bg-primary/5 hover:text-primary active:scale-95 text-primary"
               >
                 <Link href="/products" className="flex items-center gap-2">
-                  <span>Lihat Koleksi</span>
+                  <span>Explore Collections</span>
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
