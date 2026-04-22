@@ -17,10 +17,9 @@ const getServerSnapshot = () => false;
 interface ShareButtonProps {
   productName: string;
   productSlug: string;
-  price: number;
 }
 
-export function ShareButton({ productName, productSlug, price }: ShareButtonProps) {
+export function ShareButton({ productName, productSlug }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
   const canNativeShare = useSyncExternalStore(subscribe, getCanNativeShare, getServerSnapshot);
   const url = `${SITE_URL}/products/${productSlug}`;

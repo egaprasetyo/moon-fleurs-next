@@ -9,9 +9,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Clock } from "lucide-react";
+import { ImageUpload } from "@/components/admin/image-upload";
+import { Clock, Share2, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import type { StoreInfo, OperatingHour } from "@/types";
+import type { StoreInfo, OperatingHour, SocialLink, SocialPlatform } from "@/types";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+const SOCIAL_PLATFORMS: { value: SocialPlatform; label: string }[] = [
+  { value: "instagram", label: "Instagram" },
+  { value: "facebook", label: "Facebook" },
+  { value: "tiktok", label: "TikTok" },
+  { value: "twitter", label: "X (Twitter)" },
+  { value: "youtube", label: "YouTube" },
+];
 
 const DEFAULT_HOURS: OperatingHour[] = [
   { day: "Senin", open: "08:00", close: "20:00" },
@@ -32,11 +42,23 @@ export default function AdminStorePage() {
   useEffect(() => {
     const fetch = async () => {
       const { data } = await supabase.from("store_info").select("*").single();
-      setStore(data as StoreInfo | null);
+      if (data) {
+        setStore({
+          ...(data as StoreInfo),
+          images: Array.isArray((data as StoreInfo).images)
+            ? (data as StoreInfo).images
+            : [],
+          social_links: Array.isArray((data as StoreInfo).social_links)
+            ? (data as StoreInfo).social_links
+            : [],
+        });
+      } else {
+        setStore(null);
+      }
       setLoading(false);
     };
     fetch();
-  }, []);
+  }, [supabase]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,6 +76,8 @@ export default function AdminStorePage() {
         latitude: store.latitude,
         longitude: store.longitude,
         operating_hours: store.operating_hours,
+        images: store.images || [],
+        social_links: store.social_links || [],
       })
       .eq("id", store.id);
 
@@ -168,6 +192,66 @@ export default function AdminStorePage() {
         </CardContent>
       </Card>
 
+      <Card>
+        <CardHeader>
+          <CardTitle>Galeri Toko</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {(store.images || []).length === 0 && (
+            <p className="text-sm text-muted-foreground">
+              Belum ada gambar galeri. Tambahkan foto toko agar tampil di halaman publik.
+            </p>
+          )}
+
+          {(store.images || []).map((imageUrl, index) => (
+            <div key={`store-image-${index}`} className="rounded-xl border p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium">Gambar #{index + 1}</p>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="text-destructive"
+                  onClick={() =>
+                    setStore({
+                      ...store,
+                      images: (store.images || []).filter((_, idx) => idx !== index),
+                    })
+                  }
+                >
+                  Hapus
+                </Button>
+              </div>
+              <ImageUpload
+                value={imageUrl}
+                onChange={(url) =>
+                  setStore({
+                    ...store,
+                    images: (store.images || []).map((item, idx) =>
+                      idx === index ? url : item
+                    ),
+                  })
+                }
+                bucket="stores"
+              />
+            </div>
+          ))}
+
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() =>
+              setStore({
+                ...store,
+                images: [...(store.images || []), ""],
+              })
+            }
+          >
+            Tambah Gambar
+          </Button>
+        </CardContent>
+      </Card>
+
       {/* Operating Hours Card */}
       <Card>
         <CardHeader>
@@ -248,6 +332,98 @@ export default function AdminStorePage() {
               );
             }
           )}
+        </CardContent>
+      </Card>
+
+      {/* Social Media Card */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Share2 className="h-5 w-5 text-primary" />
+            Social Media
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {(store.social_links || []).length === 0 && (
+            <p className="text-sm text-muted-foreground">
+              Belum ada social media. Tambahkan agar tampil di footer.
+            </p>
+          )}
+
+          {(store.social_links || []).map((link, index) => (
+            <div
+              key={`social-${index}`}
+              className="flex flex-col gap-3 rounded-xl border border-border/50 bg-muted/20 p-4 sm:flex-row sm:items-end"
+            >
+              <div className="flex-shrink-0 space-y-1 sm:w-44">
+                <Label className="text-xs text-muted-foreground">Platform</Label>
+                <Select
+                  value={link.platform}
+                  onValueChange={(v) => {
+                    const updated = [...(store.social_links || [])];
+                    updated[index] = { ...updated[index], platform: v as SocialPlatform };
+                    setStore({ ...store, social_links: updated });
+                  }}
+                >
+                  <SelectTrigger className="h-9">
+                    <SelectValue placeholder="Pilih platform" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SOCIAL_PLATFORMS.map((p) => (
+                      <SelectItem key={p.value} value={p.value}>
+                        {p.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex-1 space-y-1">
+                <Label className="text-xs text-muted-foreground">URL</Label>
+                <Input
+                  value={link.url}
+                  onChange={(e) => {
+                    const updated = [...(store.social_links || [])];
+                    updated[index] = { ...updated[index], url: e.target.value };
+                    setStore({ ...store, social_links: updated });
+                  }}
+                  placeholder="https://instagram.com/moonfleurs"
+                  className="h-9"
+                />
+              </div>
+
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9 shrink-0 text-destructive hover:bg-destructive/10"
+                onClick={() =>
+                  setStore({
+                    ...store,
+                    social_links: (store.social_links || []).filter((_, i) => i !== index),
+                  })
+                }
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+          ))}
+
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() =>
+              setStore({
+                ...store,
+                social_links: [
+                  ...(store.social_links || []),
+                  { platform: "instagram", url: "" },
+                ],
+              })
+            }
+          >
+            Tambah Social Media
+          </Button>
         </CardContent>
       </Card>
 

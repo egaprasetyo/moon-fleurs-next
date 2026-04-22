@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Heart, X } from "lucide-react";
+import { Heart } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { NAV_LINKS } from "@/lib/constants";
 import { useWishlistStore } from "@/stores/wishlist-store";
@@ -59,7 +59,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
         {/* Bottom CTA */}
         <div className="absolute bottom-0 left-0 right-0 border-t border-border p-6">
           <p className="text-sm text-muted-foreground text-center">
-            Pesan bunga artificial abadi untuk momen spesialmu 🌸
+            Pesan bunga segar atau artificial untuk momen spesialmu 🌸
           </p>
         </div>
       </SheetContent>

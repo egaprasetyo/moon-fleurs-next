@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { motion } from "framer-motion";
 import { Loader2, ArrowRight, ShieldCheck } from "lucide-react";
@@ -16,13 +16,44 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const hasShownReasonToast = useRef(false);
   const supabase = createClient();
+
+  useEffect(() => {
+    if (hasShownReasonToast.current) return;
+
+    const reason = searchParams.get("reason");
+    if (!reason) return;
+
+    hasShownReasonToast.current = true;
+
+    if (reason === "not_admin") {
+      toast.error("Akun ini bukan admin", {
+        description:
+          "Login berhasil, tapi role bukan admin. Pastikan `profiles.role = 'admin'`.",
+      });
+      return;
+    }
+
+    if (reason === "profile_error") {
+      toast.error("Tidak bisa memverifikasi profil admin", {
+        description:
+          "Cek tabel `profiles` dan RLS policy. User harus punya baris profil.",
+      });
+      return;
+    }
+
+    if (reason === "unauthenticated") {
+      toast.info("Silakan login untuk mengakses halaman admin");
+    }
+  }, [searchParams]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data: signInData, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -33,9 +64,42 @@ export default function LoginPage() {
       return;
     }
 
+    const userId = signInData.user?.id;
+    if (!userId) {
+      toast.error("Login gagal", { description: "Session user tidak ditemukan." });
+      setLoading(false);
+      return;
+    }
+
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", userId)
+      .maybeSingle();
+
+    if (profileError) {
+      await supabase.auth.signOut();
+      toast.error("Login berhasil, tapi validasi admin gagal", {
+        description:
+          "Periksa tabel `profiles` dan policy RLS. User harus bisa membaca profilnya sendiri.",
+      });
+      setLoading(false);
+      return;
+    }
+
+    if (!profile || profile.role !== "admin") {
+      await supabase.auth.signOut();
+      toast.error("Akun ini bukan admin", {
+        description: "Set `profiles.role` menjadi `admin` untuk akun ini.",
+      });
+      setLoading(false);
+      return;
+    }
+
     toast.success("Berhasil login!");
-    router.push("/admin");
+    router.replace("/admin");
     router.refresh();
+    setLoading(false);
   };
 
   return (

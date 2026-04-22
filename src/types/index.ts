@@ -71,6 +71,13 @@ export interface OperatingHour {
   isClosed?: boolean;
 }
 
+export type SocialPlatform = "instagram" | "facebook" | "tiktok" | "twitter" | "youtube";
+
+export interface SocialLink {
+  platform: SocialPlatform;
+  url: string;
+}
+
 export interface StoreInfo {
   id: string;
   name: string;
@@ -82,6 +89,7 @@ export interface StoreInfo {
   longitude: number | null;
   operating_hours: OperatingHour[];
   images: string[];
+  social_links: SocialLink[];
   updated_at: string;
 }
 

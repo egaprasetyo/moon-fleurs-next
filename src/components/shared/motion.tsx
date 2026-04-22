@@ -87,15 +87,9 @@ export function MotionStagger({
   className?: string;
 }) {
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-40px" }}
-      variants={staggerContainer}
-      className={className}
-    >
+    <div className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
@@ -108,6 +102,9 @@ export function MotionItem({
 }) {
   return (
     <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-60px" }}
       variants={staggerItem}
       transition={{ duration: 0.4, ease: "easeOut" }}
       className={className}

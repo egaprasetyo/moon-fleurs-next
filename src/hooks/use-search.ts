@@ -1,10 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
 import type { Product } from "@/types";
-
-const supabase = createClient();
 
 export function useSearch(debounceMs = 300) {
   const [query, setQuery] = useState("");
@@ -27,18 +24,21 @@ export function useSearch(debounceMs = 300) {
       return;
     }
 
+    const controller = new AbortController();
+
     const search = async () => {
       setIsLoading(true);
       try {
-        const { data, error } = await supabase
-          .from("products")
-          .select("id, name, slug, price, discount_price, thumbnail_url")
-          .eq("is_active", true)
-          .ilike("name", `%${debouncedQuery}%`)
-          .limit(6);
+        const response = await fetch(
+          `/api/search?q=${encodeURIComponent(debouncedQuery)}`,
+          {
+            signal: controller.signal,
+          }
+        );
 
-        if (error) throw error;
-        setResults((data || []) as Product[]);
+        if (!response.ok) throw new Error("Search request failed");
+        const data = (await response.json()) as Product[];
+        setResults(data || []);
       } catch {
         setResults([]);
       } finally {
@@ -47,6 +47,7 @@ export function useSearch(debounceMs = 300) {
     };
 
     search();
+    return () => controller.abort();
   }, [debouncedQuery]);
 
   return {

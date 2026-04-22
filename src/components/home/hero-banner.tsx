@@ -47,14 +47,14 @@ export function HeroBanner() {
               🌸
             </motion.span>
             <h1 className="max-w-4xl px-4 font-heading text-4xl font-extrabold tracking-tight text-foreground md:text-6xl lg:text-7xl">
-              Bunga Artificial untuk{" "}
+              Bunga Segar & Artificial untuk{" "}
               <span className="bg-gradient-to-r from-primary to-rose-400 bg-clip-text text-transparent">
                 Momen Spesial
               </span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl px-4 text-base text-muted-foreground md:text-xl md:leading-relaxed">
-              Moon Fleurs menyediakan artificial flowers premium berkualitas tinggi, dirangkai
-              dengan penuh cinta dan dedikasi untuk setiap kesempatan istimewa Anda. Tahan lama dan indah abadi.
+              Moon Fleurs menyediakan bunga segar pilihan dan artificial flowers premium, dirangkai
+              dengan penuh cinta untuk setiap kesempatan istimewa Anda — natural dan wangi, atau indah dan tahan lama.
             </p>
             <div className="mt-10 flex gap-4">
               <Button asChild size="lg" className="rounded-full px-8 shadow-lg shadow-primary/20 transition-all hover:scale-105 hover:shadow-xl hover:shadow-primary/30">
