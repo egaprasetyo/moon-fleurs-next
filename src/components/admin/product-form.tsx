@@ -344,6 +344,7 @@ export function ProductForm({ productId }: ProductFormProps) {
             <div className="space-y-2">
               <Label>Kategori *</Label>
               <Select
+                key={form.category_id || "_empty"}
                 value={form.category_id}
                 onValueChange={(v) => setForm({ ...form, category_id: v })}
               >
