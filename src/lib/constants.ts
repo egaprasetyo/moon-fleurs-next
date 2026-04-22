@@ -29,6 +29,10 @@ export const SEO_KEYWORDS = [
   "bunga artificial premium",
   "faux flowers",
   "florist jakarta",
+  "florist alam sutra",
+  "toko bunga alam sutra",
+  "toko bunga tangerang",
+  "florist tangerang",
   "hadiah bunga",
   "dekorasi bunga",
 ];
